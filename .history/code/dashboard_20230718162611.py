@@ -45,7 +45,7 @@ with header_mid:
     image = Image.open('logo-pantanal.png')
     
     # Exibindo a imagem
-    st.image(image)
+    st.image(image, caption="Imagem")
     # st.image('D:\\UFMS\\Pantanal.dev\\Onça pintada\\Projeto-pantanal\\assets\\images\\logo-pantanal.png', use_column_width='Auto')
     st.title('Detecção de fraudes em cartões de crédito')
 

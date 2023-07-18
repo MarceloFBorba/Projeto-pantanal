@@ -42,10 +42,16 @@ st.set_page_config(page_title='Pantanal.dev',
 header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
 
 with header_mid:
-    image = Image.open('logo-pantanal.png')
-    
+    image = Image.open('assets\images\logo-pantanal.png')
+    # Caminho relativo da imagem
+    image_path = "assets\images\logo-pantanal.png"
+
+    # Construindo o caminho absoluto usando o os.path.join
+    abs_image_path = os.path.join(os.getcwd(), image_path)
+    print(abs_image_path)
+
     # Exibindo a imagem
-    st.image(image)
+    st.image(image, caption="Imagem")
     # st.image('D:\\UFMS\\Pantanal.dev\\Onça pintada\\Projeto-pantanal\\assets\\images\\logo-pantanal.png', use_column_width='Auto')
     st.title('Detecção de fraudes em cartões de crédito')
 
