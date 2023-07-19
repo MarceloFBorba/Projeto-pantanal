@@ -101,28 +101,62 @@ with total5:
     total = 500
     st.image(image, use_column_width='Auto')
     st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
+# with total2:
+#     st.image('Dashboard/images/mulher.png', use_column_width='Auto')
+#     st.metric(label='Eleitorado feminino',
+#               value=numerize(total_eleitores_feminino))
+
+# with total3:
+#     st.image('Dashboard/images/masculino.png', use_column_width='Auto')
+#     st.metric(label='Eleitorado masculino',
+#               value=numerize(total_eleitores_masculino))
+
+# with total4:
+#     st.image('Dashboard/images/voto.png', use_column_width='Auto')
+#     st.metric(label='Comparecimento percentual', value='{:0,.2f}%'.format(
+#         comparecimento_percentual).replace('.', ','))
+
+# with total5:
+#     st.image('Dashboard/images/votar-nao.png', use_column_width='Auto')
+#     st.metric(label='Abstenção percentual', value='{:0,.2f}%'.format(
+#         abstencao_percentual).replace('.', ','))
+
+# if ((dados == 'Estadual - 1º turno')
+#         or (dados == 'Estadual - 2º turno')):
+
+#     ESTADOS = (df['estado'].drop_duplicates())
+
+#     def format_func_estado(option):
+#         return ESTADOS[option]
+
+#     estado = st.selectbox(
+#         "", options=list(ESTADOS.keys()), 
+#         format_func=format_func_estado,
+#         key='estados')
     
-Q1, Q2 = st.columns(2)
-with Q1:
-    # plotar gráfico de barras para as Classes
-    fig, ax = plt.subplots(figsize=(6,4))
+# Q1, Q2 = st.columns(2)
+# with Q1:
+    # st.image('D:\\UFMS\\Pantanal.dev\\Onça pintada\\Projeto-pantanal\\assets\\images\\logo-pantanal.png', use_column_width='Auto')
+#         st.write('Comparecimento percentual por estado')
+#         geo = gpd.read_file('Dashboard/data/geo.gpkg', layer='lim_unidade_federacao_a')
+#         geo.rename({'sigla': 'estado'}, axis=1, inplace=True)
+#         geo = geo.sort_values(by='estado', ascending=True)
+#         geo = geo.reset_index(drop=True)
+#         geo = geo.drop(columns=['nome', 'nomeabrev', 'geometriaaproximada', 'geocodigo',
+#                                 'id_produtor', 'id_elementoprodutor', 'cd_insumo_orgao',
+#                                 'nr_insumo_mes', 'nr_insumo_ano', 'tx_insumo_documento'], axis=1)
 
-    sns.countplot(data=df, x='Class', palette=['#2A8BF0', '#F03131'])
-
-    ax.set_frame_on(False)
-
-    ax.text(-0.4, df.Class.value_counts()[0] + 25000, 'Distribuição das transações', fontsize = 20, color = '#3f3f4e')
-
-    ax.get_yaxis().set_visible(False)
-    ax.set_xticklabels(['Normal', 'Fraude'], fontsize=16, color='#3f3f4e')
-    ax.set_xlabel('')
-
-    for i in ax.patches:
-    ax.text(i.get_x() + i.get_width() / 2,
-            i.get_height() + 5000,
-            '{} ({:0,.2f}%)'.format(int(i.get_height()), (i.get_height()/int(df.Class.value_counts()[0] + df.Class.value_counts()[1])) * 100).replace('.',','),
-            ha = 'center',
-            fontsize=14, color='#3f3f4e')
+#         df = df.merge(geo, on='estado', how='inner')
+#         geoDF = GeoDataFrame(
+#             df[['estado', 'comparecimento_percentual(%)', 'geometry']])
+#         m = geoDF.explore(
+#             column="estado",
+#             cmap="summer",
+#             # name="Estados"
+#         )
+#         folium.TileLayer('Stamen Toner', control=True).add_to(m)
+#         folium.LayerControl().add_to(m)
+#         st_map = st_folium(m, width=680, height=440)
 
 #     with Q2:
 #         def plot_chart(estadoIndex, df):
