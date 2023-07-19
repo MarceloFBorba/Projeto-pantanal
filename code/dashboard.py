@@ -1,5 +1,7 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 import streamlit as st
 from streamlit_folium import st_folium
@@ -10,8 +12,7 @@ import plotly.graph_objects as go
 from plotly.graph_objs import Layout
 
 from numerize.numerize import numerize
-from streamlit_option_menu import option_menu
-
+# from streamlit_option_menu import option_menu
 
 import os
 from PIL import Image
@@ -23,11 +24,10 @@ st.set_page_config(page_title='Pantanal.dev',
                    layout='wide',
                    initial_sidebar_state='collapsed')
 
-with st.sidebar:
-    selected = option_menu("Menu", ["Home", 'Gráficos'], 
-        icons=['house','clipboard-data'], menu_icon="house", default_index=1)
-    selected
-
+# with st.sidebar:
+#     selected = option_menu("Menu", ["Home", 'Gráficos'], 
+#         icons=['house','clipboard-data'], menu_icon="house", default_index=1)
+#     selected
 
 # @st.cache_data
 # def get_data(dados):
@@ -42,7 +42,8 @@ with st.sidebar:
 #     return df
 
 
-# df = get_data('Estadual - 1º turno')
+file_path = "creditcard.csv"
+df = pd.read_csv(file_path)
 
 header_left, header_mid = st.columns([1, 4], gap='large')
 with header_left:
@@ -110,6 +111,7 @@ with total5:
     st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
     
 Q1, Q2 = st.columns(2)
+
 with Q1:
     # plotar gráfico de barras para as Classes
     fig, ax = plt.subplots(figsize=(6,4))
@@ -118,39 +120,71 @@ with Q1:
 
     ax.set_frame_on(False)
 
-    ax.text(-0.4, df.Class.value_counts()[0] + 25000, 'Distribuição das transações', fontsize = 20, color = '#3f3f4e')
+    ax.text(-0.4, df.Class.value_counts()[0] + 45000, 'Distribuição das transações', fontsize = 20, color = '#3f3f4e')
 
     ax.get_yaxis().set_visible(False)
     ax.set_xticklabels(['Normal', 'Fraude'], fontsize=16, color='#3f3f4e')
     ax.set_xlabel('')
 
     for i in ax.patches:
-    ax.text(i.get_x() + i.get_width() / 2,
+        ax.text(i.get_x() + i.get_width() / 2,
             i.get_height() + 5000,
             '{} ({:0,.2f}%)'.format(int(i.get_height()), (i.get_height()/int(df.Class.value_counts()[0] + df.Class.value_counts()[1])) * 100).replace('.',','),
             ha = 'center',
             fontsize=14, color='#3f3f4e')
+        
+    st.plotly_chart(fig, use_container_width=True)
 
-#     with Q2:
-#         def plot_chart(estadoIndex, df):
-#             estado = format_func_estado(estadoIndex)
+with Q2:
+    my_layout = Layout(hoverlabel = dict(bgcolor = '#FFFFFF'), template='simple_white')
 
-#             valor = df.loc[(df['estado'] == estado), 'comparecimento_percentual(%)'].values[0]
-#             fig = go.Figure(
-#                 go.Indicator(
-#                     value=valor,
-#                     title={'text': f"Comparecimento percentual em {estado}"},
-#                     number={'font_color': '#355070', 'suffix': '%',
-#                             'font_size': 80, "valueformat": ".2f"},
-#                     align='center'))
+    fig = go.Figure(layout = my_layout)
+    fig.add_trace(go.Box(
+        y=df.Amount[df['Class'] == 0],
+        name='Transações normais',
+        marker_color='#0C3559',
+        boxmean=True,
+        boxpoints='outliers',
+        hovertext='casa'
+    ))
+    fig.add_trace(go.Box(
+        y=df.Amount[df['Class'] == 1],
+        name='Transações fradulentas',
+        marker_color='#3698BF',
+        boxmean=True
+    ))
 
-#             st.plotly_chart(fig, use_container_width=True)
+    fig.update_layout(
+        height = 500,
+        title={
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            },
+        title_text='Gráfico do resumo estatístico das transações',
+        title_font_color='#0C3559',
+        title_font_size=20,
+        yaxis_range=[-10,500],
+        showlegend=False,
+        hoverlabel=dict(bgcolor='#FFFFFF'))
+    st.plotly_chart(fig, use_container_width=True)
 
-#         plot_chart(estado, df)
+    # plotly.offline.plot(fig, filename = 'filename.html', auto_open=False)
+    # st.pyplot(fig)
+
+    # fig.show()
 
 #     st.write('Divisão por sexo por estado')
-#     Q3, Q4 = st.columns(2)
-#     with Q3:
+Q3, Q4, Q5, Q6 = st.columns(4)
+with Q3:
+    st.write('q3')
+with Q4:
+    st.write('q3')
+with Q5:
+    st.write('q3')
+with Q6:
+    st.write('q3')
 #         homens = df['eleitorado_masculino_percentual(%)']
 #         mulheres = df['eleitorado_feminino_percentual(%)']
 
@@ -188,8 +222,8 @@ with Q1:
 
 #         st.plotly_chart(fig, use_container_width=True)
     
-#     with Q4:
-#         #st.write('Divisão por sexo no estado selecionado')
+# with Q4:
+#     st.write('Divisão por sexo no estado selecionado')
 #         def plot_chart(estadoIndex, df):
 #             estado = format_func_estado(estadoIndex)
 #             nomeEstado = [df.loc[(df['estado'] == estado, 'estado')].values[0]]
