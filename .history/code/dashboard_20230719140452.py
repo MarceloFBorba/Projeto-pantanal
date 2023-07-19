@@ -65,7 +65,7 @@ with st.empty():
 # comparecimento_percentual = float(df['comparecimento_percentual(%)'].mean())
 # abstencao_percentual = float(df['abstencao_percentual(%)'].mean())
 
-total1, total2, total3, total4, total5 = st.columns(5, gap='large')
+total1, total2, total3 = st.columns(3, gap='large')
 
 with total1:
     image = Image.open('sem-dinheiro.png')
@@ -82,20 +82,6 @@ with total2:
     st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
 
 with total3:
-    image = Image.open('sem-dinheiro.png')
-    # Exibindo a imagem
-    total = 500
-    st.image(image, use_column_width='Auto')
-    st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
-
-with total4:
-    image = Image.open('sem-dinheiro.png')
-    # Exibindo a imagem
-    total = 500
-    st.image(image, use_column_width='Auto')
-    st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
-
-with total5:
     image = Image.open('sem-dinheiro.png')
     # Exibindo a imagem
     total = 500

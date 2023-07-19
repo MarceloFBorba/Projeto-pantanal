@@ -11,6 +11,9 @@ from plotly.graph_objs import Layout
 
 from numerize.numerize import numerize
 
+import geopandas as gpd
+from geopandas import GeoDataFrame
+
 import os
 from PIL import Image
 
@@ -37,22 +40,15 @@ st.set_page_config(page_title='Pantanal.dev',
 
 # df = get_data('Estadual - 1º turno')
 
-header_left, header_mid = st.columns([1, 4], gap='large')
+header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
 with header_left:
     image = Image.open('logo-pantanal.png')
     # Exibindo a imagem
-    st.image(image, width=230)
+    st.image(image, width=200)
 with header_mid:
-    st.title('')
+    # st.image('D:\\UFMS\\Pantanal.dev\\Onça pintada\\Projeto-pantanal\\assets\\images\\logo-pantanal.png', use_column_width='Auto')
     st.title('Detecção de fraudes em cartões de crédito')
-# with header_right:
-#     image = Image.open('logo-ufms.png')
-#     st.image(image, width=180)
-with st.empty():
-    st.title('')
-with st.empty():
-    st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-             \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
+
 # dados = st.selectbox(label='Selecione a eleição',
 #                      options=['Estadual - 1º turno', 'Estadual - 2º turno',
 #                               'Municipal - 1º turno', 'Municipal - 2º turno'])
@@ -65,42 +61,12 @@ with st.empty():
 # comparecimento_percentual = float(df['comparecimento_percentual(%)'].mean())
 # abstencao_percentual = float(df['abstencao_percentual(%)'].mean())
 
-total1, total2, total3, total4, total5 = st.columns(5, gap='large')
+# total1, total2, total3, total4, total5 = st.columns(5, gap='large')
 
-with total1:
-    image = Image.open('sem-dinheiro.png')
-    # Exibindo a imagem
-    total = 500
-    st.image(image, use_column_width='Auto')
-    st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
+# with total1:
+#     st.image('Dashboard/images/voters.png', use_column_width='Auto')
+#     st.metric(label='Eleitores aptos', value=numerize(total_eleitores))
 
-with total2:
-    image = Image.open('sem-dinheiro.png')
-    # Exibindo a imagem
-    total = 500
-    st.image(image, use_column_width='Auto')
-    st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
-
-with total3:
-    image = Image.open('sem-dinheiro.png')
-    # Exibindo a imagem
-    total = 500
-    st.image(image, use_column_width='Auto')
-    st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
-
-with total4:
-    image = Image.open('sem-dinheiro.png')
-    # Exibindo a imagem
-    total = 500
-    st.image(image, use_column_width='Auto')
-    st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
-
-with total5:
-    image = Image.open('sem-dinheiro.png')
-    # Exibindo a imagem
-    total = 500
-    st.image(image, use_column_width='Auto')
-    st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
 # with total2:
 #     st.image('Dashboard/images/mulher.png', use_column_width='Auto')
 #     st.metric(label='Eleitorado feminino',
