@@ -10,6 +10,8 @@ import plotly.graph_objects as go
 from plotly.graph_objs import Layout
 
 from numerize.numerize import numerize
+from streamlit_option_menu import option_menu
+
 
 import os
 from PIL import Image
@@ -20,6 +22,11 @@ st.set_page_config(page_title='Pantanal.dev',
                    page_icon='logo-pantanal.png',
                    layout='wide',
                    initial_sidebar_state='collapsed')
+
+with st.sidebar:
+    selected = option_menu("Menu", ["Home", 'Gráficos'], 
+        icons=['house','clipboard-data'], menu_icon="house", default_index=1)
+    selected
 
 
 # @st.cache_data
