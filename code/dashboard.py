@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 from plotly.graph_objs import Layout
 
 from numerize.numerize import numerize
-# from streamlit_option_menu import option_menu
+from streamlit_option_menu import option_menu
 
 import os
 from PIL import Image
@@ -24,10 +24,13 @@ st.set_page_config(page_title='Pantanal.dev',
                    layout='wide',
                    initial_sidebar_state='collapsed')
 
-# with st.sidebar:
-#     selected = option_menu("Menu", ["Home", 'Gráficos'], 
-#         icons=['house','clipboard-data'], menu_icon="house", default_index=1)
-#     selected
+# Instalar sidebar   
+# pip install streamlit-option-menu
+
+selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", 'Sobre'], 
+    icons=['house', 'database', 'graph-up', 'info-circle'], 
+    menu_icon="cast", default_index=0, orientation="horizontal")
+
 
 # @st.cache_data
 # def get_data(dados):
@@ -244,7 +247,7 @@ with st.container():
 
 with st.container():
     st.header('Transações fraudulentas')
-    st.write('#### Aqui se observa quais os valores mais comuns das transações fraudulentas. Uma observação (talvez curiosa) é que a maior parte delas tem valor de $1,00, talvez por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
+    st.write('##### Aqui se observa quais os valores mais comuns das transações fraudulentas. Uma observação (talvez curiosa) é que a maior parte delas tem valor de $1,00, talvez por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
         
     valoresTransacoesFraudulentas = df[['Amount', 'Class']]
     valoresTransacoesFraudulentas = valoresTransacoesFraudulentas[valoresTransacoesFraudulentas['Class'] == 1]
@@ -310,7 +313,7 @@ with st.container():
 with st.container():
 
     st.header('Transações por tempo')
-    st.write('#### texto')    
+    st.write('##### texto')    
     fig, ax = plt.subplots(nrows=2, ncols = 1, figsize=(10, 8))
 
     ax[0].hist(df.Time[df.Class == 0], bins = 30, color = '#2A8BF0', rwidth= 0.9)
@@ -349,7 +352,7 @@ with st.container():
     
 with st.container():
     st.header('Transações por valor')
-    st.write('#### texto')  
+    st.write('##### texto')  
     fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(10, 8))
 
     ax[0].hist(df.Amount[df.Class == 0], bins = 30, color = '#2A8BF0', rwidth= 0.9)
@@ -404,6 +407,9 @@ from sklearn.metrics         import roc_curve, roc_auc_score
 Q3, Q4 = st.columns(2)
 
 with Q3:
+    st.header('Matriz de confusão do XGBoost')
+    st.write('##### texto')
+    
     df = df.drop_duplicates()
     X = df.drop('Class', axis = 1)
     y = df['Class']
@@ -427,6 +433,8 @@ with Q3:
     X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
     X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
     
+    plt.figure(figsize=(2, 2))
+
     modelXGB = xgb.XGBClassifier(n_estimators     = 125,
                              max_depth        = 6,
                              learning_rate    = 0.3,
@@ -436,29 +444,26 @@ with Q3:
                              reg_lambda       = 0,
                              scale_pos_weight = 1,)
     
-    plt.figure(figsize=(1, 1))
-
     modelXGB.fit(X_train, y_train)
     y_pred_xgb = modelXGB.predict(X_test)
-    print(classification_report(y_test, y_pred_xgb, digits = 4))
     matriz = confusion_matrix(y_test, y_pred_xgb)
     sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
 
 
-    plt.title('Matriz de confusão do XGB',
-            fontsize = 12,
+    plt.title('Matriz de confusão do XGBoost',
+            fontsize = 6,
             color = '#000000',
-            pad= 20,
+            pad= 5,
             fontweight= 'bold')
 
-    plt.xlabel('Previsão',fontsize = 12, color= '#000000')
-    plt.ylabel('Valor real'  ,fontsize = 12, color= '#000000')
+    plt.xlabel('Previsão',fontsize = 2, color= '#000000')
+    plt.ylabel('Valor real'  ,fontsize = 2, color= '#000000')
 
 
     #plt.show()
     #st.plotly_chart(plt, use_container_width=True)
     
-    st.pyplot(plt, use_container_width=True)
+    st.pyplot(plt, use_container_width=False)
     
     
 
