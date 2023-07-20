@@ -14,7 +14,6 @@ from plotly.graph_objs import Layout
 from numerize.numerize import numerize
 from streamlit_option_menu import option_menu
 
-import os
 from PIL import Image
 
 # import folium
@@ -22,15 +21,19 @@ from PIL import Image
 st.set_page_config(page_title='Pantanal.dev',
                    page_icon='logo-pantanal.png',
                    layout='wide',
-                   initial_sidebar_state='collapsed')
+                   initial_sidebar_state='collapsed'
+                   )
 
 # Instalar sidebar   
 # pip install streamlit-option-menu
 
 selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", 'Sobre'], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
-    menu_icon="cast", default_index=0, orientation="horizontal")
-
+    menu_icon="cast", default_index=0, orientation="horizontal",
+    styles={
+        "nav-link-selected": {"background-color": "#0378A6"}
+    }
+    )
 
 # @st.cache_data
 # def get_data(dados):
@@ -56,6 +59,7 @@ with header_left:
 with header_mid:
     st.title('')
     st.title('Detecção de fraudes em cartões de crédito')
+    
 # with header_right:
 #     image = Image.open('logo-ufms.png')
 #     st.image(image, width=180)
@@ -391,18 +395,12 @@ from imblearn.under_sampling import RandomUnderSampler
 import sklearn.metrics as metrics
 from sklearn.model_selection import train_test_split
 import xgboost as xgb
-from sklearn.metrics  import classification_report
-from imblearn.over_sampling  import ADASYN, BorderlineSMOTE, SMOTE
+from imblearn.over_sampling  import BorderlineSMOTE
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing   import StandardScaler
-from sklearn.linear_model    import LogisticRegression, SGDClassifier
-from sklearn.tree            import DecisionTreeClassifier, plot_tree, export_graphviz, export_text
-from sklearn.metrics         import classification_report
 from sklearn.metrics         import confusion_matrix
-from sklearn.metrics         import mean_squared_error, mean_absolute_error
-from sklearn.metrics         import precision_score, recall_score, accuracy_score, f1_score
-from sklearn.metrics         import roc_curve, roc_auc_score
+
 
 Q3, Q4 = st.columns(2)
 
