@@ -175,16 +175,296 @@ with Q2:
 
     # fig.show()
 
-#     st.write('Divisão por sexo por estado')
-Q3, Q4, Q5, Q6 = st.columns(4)
+
+with st.container():    
+    st.header('Transações normais')
+    st.write('Transações normais')
+    
+    valoresTransacoesNormais = df[['Amount', 'Class']]
+    valoresTransacoesNormais = valoresTransacoesNormais[valoresTransacoesNormais['Class'] == 0]
+    valoresTransacoesNormais = valoresTransacoesNormais[valoresTransacoesNormais['Amount'] != 0.0]
+    valoresTransacoesNormais['count'] = valoresTransacoesNormais.groupby('Amount')['Amount'].transform('count')
+    valoresTransacoesNormais = valoresTransacoesNormais.sort_values(by=['count', 'Amount'], ascending=False)
+    valoresTransacoesNormais = valoresTransacoesNormais.drop_duplicates()
+
+    valoresTransacoesNormais = valoresTransacoesNormais.reset_index().drop(columns=['index'], axis = 1)
+
+    x = valoresTransacoesNormais['Amount'][:10]
+    y = valoresTransacoesNormais['count'][:10]
+
+    colors = ['#0C3559', '#033F73', '#033E8C', '#0378A6', '#049DBF',
+          '#3698BF', '#A0C9D9', '#A6ACE6', '#DEE0FC', '#F2F2F2']
+
+    my_layout = Layout(hoverlabel=dict(
+                  bgcolor='#FFFFFF'),
+                  template='simple_white')
+
+    fig = go.Figure(data=[
+            go.Bar(name='', x=x.index, y=y, hovertemplate=' ',
+                   text=y,
+                   textposition='outside',
+                   marker_color=colors, showlegend=False,),],
+            layout=my_layout)
+
+    fig.update_layout(
+        height=400,
+        plot_bgcolor='rgba(0,0,0,0)',
+        yaxis_range=[0, 5000],
+        yaxis=dict(
+            tickvals=[0, 1000, 2000, 3000, 4000,
+                5000, 6000, 7000, 8000, 9000,
+                10000, 11000, 12000,
+                13000, 14000, 15000],
+        ticktext=['0', '1 mil', '2 mil', '3 mil', '4 mil', '5 mil', '6 mil', '7 mil', '8 mil',
+                '9 mil', '10 mil', '11 mil', '12 mil', '13 mil', '14 mil', '15 mil']))
+    fig.update_layout(
+        title={
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            },
+        title_text='Valores mais comuns das transações normais',
+        title_font_color='#0C3559',
+        title_font_size=20,
+        plot_bgcolor='rgba(0,0,0,0)',
+        yaxis_range=[0,15000],
+        xaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            tickvals=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            ticktext=[f"$ {percent:.2f}" for percent in x]),
+        yaxis=dict(showgrid=False, zeroline=False))
+
+    fig.update_xaxes(title_text='Valores')
+    fig.update_yaxes(title_text='Ocorrências')
+
+    st.plotly_chart(fig, use_container_width=True)
+    
+
+with st.container():
+    st.header('Transações fraudulentas')
+    st.write('#### Aqui se observa quais os valores mais comuns das transações fraudulentas. Uma observação (talvez curiosa) é que a maior parte delas tem valor de $1,00, talvez por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
+        
+    valoresTransacoesFraudulentas = df[['Amount', 'Class']]
+    valoresTransacoesFraudulentas = valoresTransacoesFraudulentas[valoresTransacoesFraudulentas['Class'] == 1]
+    valoresTransacoesFraudulentas = valoresTransacoesFraudulentas[valoresTransacoesFraudulentas['Amount'] != 0.0]
+    valoresTransacoesFraudulentas['count'] = valoresTransacoesFraudulentas.groupby('Amount')['Amount'].transform('count')
+    valoresTransacoesFraudulentas = valoresTransacoesFraudulentas.sort_values(by=['count', 'Amount'], ascending=False)
+    valoresTransacoesFraudulentas = valoresTransacoesFraudulentas.drop_duplicates()
+
+    valoresTransacoesFraudulentas = valoresTransacoesFraudulentas.reset_index().drop(columns=['index'], axis = 1)
+
+    x = valoresTransacoesFraudulentas['Amount'][:10]
+    y = valoresTransacoesFraudulentas['count'][:10]
+
+    colors = ['#0C3559', '#033F73', '#033E8C', '#0378A6', '#049DBF', '#3698BF',
+            '#A0C9D9', '#A6ACE6', '#DEE0FC', '#F2F2F2']
+
+    my_layout = Layout(hoverlabel=dict(
+                    bgcolor='#FFFFFF'),
+                    template='simple_white')
+
+    fig = go.Figure(data=[
+                go.Bar(name='', x=x.index, y=y, hovertemplate=' ',
+                    text=y,
+                    textposition='outside',
+                    marker_color=colors, showlegend=False,),],
+                layout=my_layout)
+
+    fig.update_layout(
+    height=400,
+    plot_bgcolor='rgba(0,0,0,0)',
+    yaxis_range=[0, 150],
+    yaxis=dict(
+        tickvals=[0, 10, 20, 30, 40,
+                    50, 60, 70, 80, 90,
+                    100, 110, 125]))
+        # ticktext=['0', '1 mil', '2 mil', '3 mil', '4 mil', '5 mil', '6 mil', '7 mil', '8 mil',
+                    # '9 mil', '10 mil', '11 mil', '12 mil', '13 mil', '14 mil', '15 mil']))
+    fig.update_layout(
+        title={
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            },
+        title_text='Valores mais comuns das transações fraudulentas',
+        title_font_color='#0C3559',
+        title_font_size=20,
+        plot_bgcolor='rgba(0,0,0,0)',
+        yaxis_range=[0,125],
+        xaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            tickvals=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            ticktext=[f"$ {percent:.2f}" for percent in x]),
+        yaxis=dict(showgrid=False, zeroline=False))
+
+    fig.update_xaxes(title_text='Valores')
+    fig.update_yaxes(title_text='Ocorrências')
+
+    st.plotly_chart(fig, use_container_width=True)
+    
+
+with st.container():
+
+    st.header('Transações por tempo')
+    st.write('#### texto')    
+    fig, ax = plt.subplots(nrows=2, ncols = 1, figsize=(10, 8))
+
+    ax[0].hist(df.Time[df.Class == 0], bins = 30, color = '#2A8BF0', rwidth= 0.9)
+
+    ax[0].text(df.Time[df.Class == 0].min(), 18000, "Transações normais",
+            fontsize = 20,
+            color = '#3f3f4e',
+            fontweight= 'bold')
+
+    ax[0].set_xlabel('Tempo(s)', fontsize = 12, color= '#000000')
+    ax[0].set_ylabel('Transações', fontsize = 12, color= '#000000')
+
+    ax[0].spines['top'].set_visible(False)
+    ax[0].spines['right'].set_visible(False)
+
+    ax[0].margins(x=0)
+
+    ax[1].hist(df.Time[df.Class == 1], bins = 30, color= '#F03131', rwidth= 0.9)
+
+    ax[1].text(df.Time[df.Class == 1].min(), 55, "Transações fraudulentas",
+            fontsize = 20,
+            color = '#3f3f4e',
+            fontweight= 'bold')
+
+    ax[1].set_xlabel('Tempo(s)', fontsize = 12, color= '#000000')
+    ax[1].set_ylabel('Transações', fontsize = 12, color= '#000000')
+
+    ax[1].spines['top'].set_visible(False)
+    ax[1].spines['right'].set_visible(False)
+
+    ax[1].margins(x=0)
+
+    st.write(plt.tight_layout(pad = 3.0))
+    
+    
+    
+with st.container():
+    st.header('Transações por valor')
+    st.write('#### texto')  
+    fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(10, 8))
+
+    ax[0].hist(df.Amount[df.Class == 0], bins = 30, color = '#2A8BF0', rwidth= 0.9)
+
+    ax[0].text(df.Amount[df.Class == 0].min(), 310000, "Transações normais",
+            fontsize = 20,
+            color = '#3f3f4e',
+            fontweight= 'bold')
+
+    ax[0].set_xlabel('Valor($)', fontsize = 12, color= '#000000')
+    ax[0].set_ylabel('Transações', fontsize = 12, color= '#000000')
+
+    ax[0].spines['top'].set_visible(False)
+    ax[0].spines['right'].set_visible(False)
+
+    ax[0].margins(x=0)
+
+    ax[1].hist(df.Amount[df.Class == 1], bins = 30, color = '#F03131', rwidth= 0.9)
+
+    ax[1].text(df.Amount[df.Class == 1].min(), 350, "Transações fraudulentas",
+            fontsize = 20,
+            color = '#3f3f4e',
+            fontweight= 'bold')
+
+    ax[1].set_xlabel('Valor($)', fontsize = 12, color= '#000000')
+    ax[1].set_ylabel('Transações', fontsize = 12, color= '#000000')
+
+    ax[1].spines['top'].set_visible(False)
+    ax[1].spines['right'].set_visible(False)
+
+    ax[1].margins(x=0)
+
+    st.write(plt.tight_layout(pad = 3.0))
+
+from imblearn.under_sampling import RandomUnderSampler
+import sklearn.metrics as metrics
+from sklearn.model_selection import train_test_split
+import xgboost as xgb
+from sklearn.metrics  import classification_report
+from imblearn.over_sampling  import ADASYN, BorderlineSMOTE, SMOTE
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing   import StandardScaler
+from sklearn.linear_model    import LogisticRegression, SGDClassifier
+from sklearn.tree            import DecisionTreeClassifier, plot_tree, export_graphviz, export_text
+from sklearn.metrics         import classification_report
+from sklearn.metrics         import confusion_matrix
+from sklearn.metrics         import mean_squared_error, mean_absolute_error
+from sklearn.metrics         import precision_score, recall_score, accuracy_score, f1_score
+from sklearn.metrics         import roc_curve, roc_auc_score
+
+Q3, Q4 = st.columns(2)
+
 with Q3:
-    st.write('q3')
-with Q4:
-    st.write('q3')
-with Q5:
-    st.write('q3')
-with Q6:
-    st.write('q3')
+    df = df.drop_duplicates()
+    X = df.drop('Class', axis = 1)
+    y = df['Class']
+    
+    borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
+    
+    X_over,y_over = borderLineSMOTE.fit_resample(X, y)
+    
+    rus = RandomUnderSampler()
+    X_under, y_under = rus.fit_resample(X_over, y_over)
+    
+    X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True)
+    scaler = StandardScaler()
+
+    X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
+    X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
+
+    X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
+    X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
+
+    X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
+    X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
+    
+    modelXGB = xgb.XGBClassifier(n_estimators     = 125,
+                             max_depth        = 6,
+                             learning_rate    = 0.3,
+                             subsample        = 1,
+                             colsample_bytree = 1,
+                             reg_alpha        = 0,
+                             reg_lambda       = 0,
+                             scale_pos_weight = 1,)
+    
+    plt.figure(figsize=(1, 1))
+
+    modelXGB.fit(X_train, y_train)
+    y_pred_xgb = modelXGB.predict(X_test)
+    print(classification_report(y_test, y_pred_xgb, digits = 4))
+    matriz = confusion_matrix(y_test, y_pred_xgb)
+    sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
+
+
+    plt.title('Matriz de confusão do XGB',
+            fontsize = 12,
+            color = '#000000',
+            pad= 20,
+            fontweight= 'bold')
+
+    plt.xlabel('Previsão',fontsize = 12, color= '#000000')
+    plt.ylabel('Valor real'  ,fontsize = 12, color= '#000000')
+
+
+    #plt.show()
+    #st.plotly_chart(plt, use_container_width=True)
+    
+    st.pyplot(plt, use_container_width=True)
+    
+    
+
+    #st.plotly_chart(ax, use_container_width=True)
+    
+
 #         homens = df['eleitorado_masculino_percentual(%)']
 #         mulheres = df['eleitorado_feminino_percentual(%)']
 
