@@ -25,13 +25,23 @@ st.set_page_config(page_title='Pantanal.dev',
 # Instalar sidebar   
 # pip install streamlit-option-menu
 
-selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", "Sobre"], 
+#selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", "Sobre"], 
+#    icons=['house', 'database', 'graph-up', 'info-circle'], 
+#    menu_icon="cast", default_index=0, orientation="horizontal",
+#    styles={
+#        "nav-link-selected": {"background-color": "#0378A6"}
+#    }
+#    )
+
+with st.sidebar:
+    selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
-    menu_icon="cast", default_index=0, orientation="horizontal",
+    menu_icon="menu-app", default_index=0,
     styles={
         "nav-link-selected": {"background-color": "#0378A6"}
     }
     )
+
 
 # @st.cache_data
 # def get_data(dados):
@@ -65,7 +75,7 @@ if (selected2 == "Home"):
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
-        st.title('')
+        st.title('fist')
         st.title('Detecção de fraudes em cartões de crédito')
 
     with header_right:
@@ -79,7 +89,8 @@ if (selected2 == "Home"):
 
 # pagina Dados usados
 if (selected2 == "Dados Usados"):
-    st.write("pagina DADOS")
+    st.header("Dados Utilizados")
+    st.write("Falar sobre os dados que utilizamos para fazer a analise")
    
 # pagina Graficos
 if (selected2 == "Gráficos"):
@@ -466,68 +477,34 @@ if (selected2 == "Gráficos"):
         
         st.pyplot(plt, use_container_width=False)
         
-        
-    st.header('Matriz de confusão do XGBoost')
-    st.write('##### texto')
-    
-    df = df.drop_duplicates()
-    X = df.drop('Class', axis = 1)
-    y = df['Class']
-    
-    borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
-    
-    X_over,y_over = borderLineSMOTE.fit_resample(X, y)
-    
-    rus = RandomUnderSampler()
-    X_under, y_under = rus.fit_resample(X_over, y_over)
-    
-    X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True)
-    scaler = StandardScaler()
-
-    X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
-    X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
-
-    X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
-    X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
-
-    X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
-    X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
-    
-    plt.figure(figsize=(2, 2))
-
-    modelXGB = xgb.XGBClassifier(n_estimators     = 125,
-                             max_depth        = 6,
-                             learning_rate    = 0.3,
-                             subsample        = 1,
-                             colsample_bytree = 1,
-                             reg_alpha        = 0,
-                             reg_lambda       = 0,
-                             scale_pos_weight = 1,)
-    
-    modelXGB.fit(X_train, y_train)
-    y_pred_xgb = modelXGB.predict(X_test)
-    matriz = confusion_matrix(y_test, y_pred_xgb)
-    sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
-
-
-    plt.title('Matriz de confusão do XGBoost',
-            fontsize = 6,
-            color = '#000000',
-            pad= 5,
-            fontweight= 'bold')
-
-    plt.xlabel('Previsão',fontsize = 2, color= '#000000')
-    plt.ylabel('Valor real'  ,fontsize = 2, color= '#000000')
-
-
-    #plt.show()
-    #st.plotly_chart(plt, use_container_width=True)
-    
-    st.pyplot(plt, use_container_width=False)
 
 # pagina sobre
 if (selected2 == "Sobre"):
-    st.write("pagina sobre")
+    st.header("Sobre")
+    
+    st.write("texto sobre o projeto")
+    
+    st.subheader("Integrantes")
+    st.write("Projeto realizado por:")    
+    
+    perfil1, perfil2, perfil3, perfil4 = st.columns(4)
+    
+    with perfil1:
+        st.image("imagens/rodrigo.png")
+        st.write('Wallynson Rodrigo H. da Silva \n\n Sistemas de informação \n\n w.rodrigo@ufms.br')
+        
+    with perfil2:
+        st.image("imagens/vitor.png")
+        st.write('Vitor de Sousa Santos \n\n Engenharia da computação \n\n vi.ssantos2000@gmail.com')
+        
+    with perfil3:
+        st.image("imagens/icaro.png")
+        st.write('Ícaro de Paula F. Coêlho \n\n Engenharia da computação \n\n icarogga@gmail.com')
+        
+    with perfil4:
+        st.image("imagens/marcelo.png")
+        st.write('Marcelo Ferreira Borba \n\n Sistemas de informação \n\n m.ferreira@ufms.br')
+
 
     
 
