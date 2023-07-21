@@ -45,6 +45,10 @@ selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", "Sobre"],
 #         df = pd.read_csv('Dashboard/data/df_municipios_2turno_2020.csv')
 #     return df
 
+file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
+# file_path = "creditcard.csv"
+df = pd.read_csv(file_path)
+
 # dados = st.selectbox(label='Selecione a eleição',
 #                      options=['Estadual - 1º turno', 'Estadual - 2º turno',
 #                               'Municipal - 1º turno', 'Municipal - 2º turno'])
@@ -57,20 +61,21 @@ selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", "Sobre"],
 # comparecimento_percentual = float(df['comparecimento_percentual(%)'].mean())
 # abstencao_percentual = float(df['abstencao_percentual(%)'].mean())
 
+header_left, header_mid, header_right = st.columns([1, 4, 1], gap='large')
+with header_left:
+    image = Image.open('logo-pantanal.png')
+    # Exibindo a imagem
+    st.image(image, width=230)
+with header_mid:
+    st.title('')
+    st.title('Detecção de fraudes em cartões de crédito')
+
+with header_right:
+    image = Image.open('logo-ufms.png')
+    st.image(image, width=180)
+
 # pagina Home
 if (selected2 == "Home"):
-    header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
-    with header_left:
-        image = Image.open('logo-pantanal.png')
-        # Exibindo a imagem
-        st.image(image, width=260)
-    with header_mid:
-        st.title('')
-        st.title('Detecção de fraudes em cartões de crédito')
-
-    with header_right:
-        image = Image.open('ufms_logo_negativo_rgb.png')
-        st.image(image, width=130)
     with st.empty():
         st.title('')
     with st.empty():
@@ -83,24 +88,22 @@ if (selected2 == "Dados Usados"):
    
 # pagina Graficos
 if (selected2 == "Gráficos"):
-    file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
-    # file_path = "creditcard.csv"
-    df = pd.read_csv(file_path)
+    st.header("Gráficos")
     
     total1, total2, total3, total4, total5 = st.columns(5, gap='large')
     with total1:
         image = Image.open('sem-dinheiro.png')
         # Exibindo a imagem
-        total = df['Amount'].sum()
+        total = 500
         st.image(image, use_column_width='Auto')
-        st.metric(label='Valores totais (US$)', value=numerize(total))
+        st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
 
     with total2:
         image = Image.open('sem-dinheiro.png')
         # Exibindo a imagem
-        totalPerdas = df.Amount[df['Class'] == 1].sum()
+        total = 500
         st.image(image, use_column_width='Auto')
-        st.metric(label='Perdas com fraudes (US$)', value=numerize(totalPerdas))
+        st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
 
     with total3:
         image = Image.open('sem-dinheiro.png')
@@ -126,34 +129,29 @@ if (selected2 == "Gráficos"):
     Q1, Q2 = st.columns(2)
 
     with Q1:
-        st.subheader('Distribuição das transações')
+        # plotar gráfico de barras para as Classes
+        fig, ax = plt.subplots(figsize=(6,4))
 
-        class_counts = df['Class'].value_counts()
-        class_counts.rename({'count': 'Quantidade'}, inplace=True)
+        sns.countplot(data=df, x='Class', palette=['#2A8BF0', '#F03131'])
 
-        colors = ['#0C3559', '#F2F2F2']
-        my_layout = Layout(hoverlabel = dict(bgcolor = '#FFFFFF'), template='simple_white')
+        ax.set_frame_on(False)
 
-        fig = go.Figure(layout = my_layout)
+        ax.text(-0.4, df.Class.value_counts()[0] + 45000, 'Distribuição das transações', fontsize = 20, color = '#3f3f4e')
 
-        fig.add_trace(go.Bar(
-            x=class_counts.index,
-            y=class_counts.values,
-            text=class_counts.values,
-            textposition='outside',
-            marker_color=colors,
-        ))
+        ax.get_yaxis().set_visible(False)
+        ax.set_xticklabels(['Normal', 'Fraude'], fontsize=16, color='#3f3f4e')
+        ax.set_xlabel('')
 
-        fig.update_layout(
-        xaxis=dict(
-                tickvals=[0, 1],
-            ticktext=['Normal', 'Fraude',])
-        )
+        for i in ax.patches:
+            ax.text(i.get_x() + i.get_width() / 2,
+                i.get_height() + 5000,
+                '{} ({:0,.2f}%)'.format(int(i.get_height()), (i.get_height()/int(df.Class.value_counts()[0] + df.Class.value_counts()[1])) * 100).replace('.',','),
+                ha = 'center',
+                fontsize=14, color='#3f3f4e')
             
         st.plotly_chart(fig, use_container_width=True)
 
     with Q2:
-        st.subheader('Resumo estatístico das transações')
         my_layout = Layout(hoverlabel = dict(bgcolor = '#FFFFFF'), template='simple_white')
 
         fig = go.Figure(layout = my_layout)
@@ -180,16 +178,23 @@ if (selected2 == "Gráficos"):
                 'xanchor': 'center',
                 'yanchor': 'top',
                 },
+            title_text='Gráfico do resumo estatístico das transações',
+            title_font_color='#0C3559',
+            title_font_size=20,
             yaxis_range=[-10,500],
             showlegend=False,
             hoverlabel=dict(bgcolor='#FFFFFF'))
         st.plotly_chart(fig, use_container_width=True)
 
+        # plotly.offline.plot(fig, filename = 'filename.html', auto_open=False)
+        # st.pyplot(fig)
+
+        # fig.show()
 
 
     with st.container():    
-        st.subheader('Transações normais')
-        st.write('#### As transações normais têm seus valores mais comuns entre \$1,00 e \$15,00 apenas.')
+        st.header('Transações normais')
+        st.write('Transações normais')
         
         valoresTransacoesNormais = df[['Amount', 'Class']]
         valoresTransacoesNormais = valoresTransacoesNormais[valoresTransacoesNormais['Class'] == 0]
@@ -204,7 +209,7 @@ if (selected2 == "Gráficos"):
         y = valoresTransacoesNormais['count'][:10]
 
         colors = ['#0C3559', '#033F73', '#033E8C', '#0378A6', '#049DBF',
-            '#3698BF', '#A6ACE6', '#A0C9D9 ', '#DEE0FC', '#F2F2F2']
+            '#3698BF', '#A0C9D9', '#A6ACE6', '#DEE0FC', '#F2F2F2']
 
         my_layout = Layout(hoverlabel=dict(
                     bgcolor='#FFFFFF'),
@@ -235,9 +240,9 @@ if (selected2 == "Gráficos"):
                 'xanchor': 'center',
                 'yanchor': 'top',
                 },
-            # title_text='Valores mais comuns das transações normais',
-            # title_font_color='#0C3559',
-            # title_font_size=20,
+            title_text='Valores mais comuns das transações normais',
+            title_font_color='#0C3559',
+            title_font_size=20,
             plot_bgcolor='rgba(0,0,0,0)',
             yaxis_range=[0,15000],
             xaxis=dict(
@@ -254,8 +259,8 @@ if (selected2 == "Gráficos"):
         
 
     with st.container():
-        st.subheader('Transações fraudulentas')
-        st.write('##### Aqui se vê quais os valores mais comuns das transações fraudulentas. Uma observação interessante é que a maior parte delas tem valor de $1,00, por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
+        st.header('Transações fraudulentas')
+        st.write('##### Aqui se observa quais os valores mais comuns das transações fraudulentas. Uma observação (talvez curiosa) é que a maior parte delas tem valor de $1,00, talvez por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
             
         valoresTransacoesFraudulentas = df[['Amount', 'Class']]
         valoresTransacoesFraudulentas = valoresTransacoesFraudulentas[valoresTransacoesFraudulentas['Class'] == 1]
@@ -300,9 +305,9 @@ if (selected2 == "Gráficos"):
                 'xanchor': 'center',
                 'yanchor': 'top',
                 },
-            # title_text='Valores mais comuns das transações fraudulentas',
-            # title_font_color='#0C3559',
-            # title_font_size=20,
+            title_text='Valores mais comuns das transações fraudulentas',
+            title_font_color='#0C3559',
+            title_font_size=20,
             plot_bgcolor='rgba(0,0,0,0)',
             yaxis_range=[0,125],
             xaxis=dict(
@@ -317,6 +322,7 @@ if (selected2 == "Gráficos"):
 
         st.plotly_chart(fig, use_container_width=True)
         
+
     with st.container():
 
         st.header('Transações por tempo')

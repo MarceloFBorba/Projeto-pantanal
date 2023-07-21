@@ -126,7 +126,7 @@ if (selected2 == "Gráficos"):
     Q1, Q2 = st.columns(2)
 
     with Q1:
-        st.subheader('Distribuição das transações')
+        st.title('## Distribuição das transações')
 
         class_counts = df['Class'].value_counts()
         class_counts.rename({'count': 'Quantidade'}, inplace=True)
@@ -153,7 +153,7 @@ if (selected2 == "Gráficos"):
         st.plotly_chart(fig, use_container_width=True)
 
     with Q2:
-        st.subheader('Resumo estatístico das transações')
+        st.header('Resumo estatístico das transações')
         my_layout = Layout(hoverlabel = dict(bgcolor = '#FFFFFF'), template='simple_white')
 
         fig = go.Figure(layout = my_layout)
@@ -188,7 +188,7 @@ if (selected2 == "Gráficos"):
 
 
     with st.container():    
-        st.subheader('Transações normais')
+        st.header('Transações normais')
         st.write('#### As transações normais têm seus valores mais comuns entre \$1,00 e \$15,00 apenas.')
         
         valoresTransacoesNormais = df[['Amount', 'Class']]
@@ -254,7 +254,7 @@ if (selected2 == "Gráficos"):
         
 
     with st.container():
-        st.subheader('Transações fraudulentas')
+        st.header('Transações fraudulentas')
         st.write('##### Aqui se vê quais os valores mais comuns das transações fraudulentas. Uma observação interessante é que a maior parte delas tem valor de $1,00, por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
             
         valoresTransacoesFraudulentas = df[['Amount', 'Class']]
