@@ -79,13 +79,13 @@ if (selected2 != "Gráficos"):
     with header_right:
         image = Image.open('ufms_logo_negativo_rgb.png')
         st.image(image, width=130)
-# pagina Home
-if (selected2 == "Home"):
     with st.empty():
         st.title('')
     with st.empty():
         st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-             r\n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
+             \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
+# pagina Home
+if (selected2 == "Home"):
     # header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     # with header_left:
     #     image = Image.open('logo-pantanal.png')
