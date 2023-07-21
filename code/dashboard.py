@@ -81,7 +81,6 @@ if (selected2 == "Home"):
         # Exibindo a imagem
         st.image(image, width=230)
     with header_mid:
-        st.title('fist')
         st.title('Detecção de fraudes em cartões de crédito')
     
     #with header_right:
@@ -497,21 +496,21 @@ if (selected2 == "Sobre"):
     
     perfil1, perfil2, perfil3, perfil4 = st.columns(4)
     
-    with perfil1:
-        st.image("imagens/rodrigo.png")
-        st.write('Wallynson Rodrigo H. da Silva \n\n Sistemas de informação \n\n w.rodrigo@ufms.br')
-        
+    with perfil1:            
+        st.image("imagens/rodrigo.png", width=300)
+        st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br')
+
     with perfil2:
-        st.image("imagens/vitor.png")
-        st.write('Vitor de Sousa Santos \n\n Engenharia da computação \n\n vi.ssantos2000@gmail.com')
+        st.image("imagens/vitor.png", width=300)
+        st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com')
         
     with perfil3:
-        st.image("imagens/icaro.png")
-        st.write('Ícaro de Paula F. Coêlho \n\n Engenharia da computação \n\n icarogga@gmail.com')
+        st.image("imagens/icaro.png", width=300)
+        st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com')
         
     with perfil4:
-        st.image("imagens/marcelo.png")
-        st.write('Marcelo Ferreira Borba \n\n Sistemas de informação \n\n m.ferreira@ufms.br')
+        st.image("imagens/marcelo.png", width=300)
+        st.write('#### **_Marcelo Ferreira Borba_** \n\nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br')
 
 
     
