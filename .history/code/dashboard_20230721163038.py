@@ -79,13 +79,13 @@ if (selected2 != "Gráficos"):
     with header_right:
         image = Image.open('ufms_logo_negativo_rgb.png')
         st.image(image, width=130)
-# pagina Home
-if (selected2 == "Home"):
     with st.empty():
         st.title('')
     with st.empty():
         st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-             r\n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
+             \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
+# pagina Home
+if (selected2 == "Home"):
     # header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     # with header_left:
     #     image = Image.open('logo-pantanal.png')
@@ -505,21 +505,21 @@ if (selected2 == "Sobre"):
     
     perfil1, perfil2, perfil3, perfil4 = st.columns(4)
     
-    with perfil1:            
-        st.image("imagens/rodrigo.png", width=300)
-        st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br')
-
+    with perfil1:
+        st.image("imagens/rodrigo.png")
+        st.write('Wallynson Rodrigo H. da Silva \n\n Sistemas de informação \n\n w.rodrigo@ufms.br')
+        
     with perfil2:
-        st.image("imagens/vitor.png", width=300)
-        st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com')
+        st.image("imagens/vitor.png")
+        st.write('Vitor de Sousa Santos \n\n Engenharia da computação \n\n vi.ssantos2000@gmail.com')
         
     with perfil3:
-        st.image("imagens/icaro.png", width=300)
-        st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com')
+        st.image("imagens/icaro.png")
+        st.write('Ícaro de Paula F. Coêlho \n\n Engenharia da computação \n\n icarogga@gmail.com')
         
     with perfil4:
-        st.image("imagens/marcelo.png", width=300)
-        st.write('#### **_Marcelo Ferreira Borba_** \n\nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br')
+        st.image("imagens/marcelo.png")
+        st.write('Marcelo Ferreira Borba \n\n Sistemas de informação \n\n m.ferreira@ufms.br')
 
 
     

@@ -25,23 +25,13 @@ st.set_page_config(page_title='Pantanal.dev',
 # Instalar sidebar   
 # pip install streamlit-option-menu
 
-#selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", "Sobre"], 
-#    icons=['house', 'database', 'graph-up', 'info-circle'], 
-#    menu_icon="cast", default_index=0, orientation="horizontal",
-#    styles={
-#        "nav-link-selected": {"background-color": "#0378A6"}
-#    }
-#    )
-
-with st.sidebar:
-    selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
+selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
-    menu_icon="menu-app", default_index=0,
+    menu_icon="cast", default_index=0, orientation="horizontal",
     styles={
         "nav-link-selected": {"background-color": "#0378A6"}
     }
     )
-
 
 # @st.cache_data
 # def get_data(dados):
@@ -67,46 +57,30 @@ with st.sidebar:
 # comparecimento_percentual = float(df['comparecimento_percentual(%)'].mean())
 # abstencao_percentual = float(df['abstencao_percentual(%)'].mean())
 
-if (selected2 != "Gráficos"):
-    header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
-    with header_left:
-        image = Image.open('logo-pantanal.png')
-        # Exibindo a imagem
-        st.image(image, width=260)
-    with header_mid:
-        st.title('Detecção de fraudes em cartões de crédito')
+header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
+with header_left:
+    image = Image.open('logo-pantanal.png')
+    # Exibindo a imagem
+    st.image(image, width=260)
+with header_mid:
+    st.title('')
+    st.title('Detecção de fraudes em cartões de crédito')
 
-    with header_right:
-        image = Image.open('ufms_logo_negativo_rgb.png')
-        st.image(image, width=130)
+with header_right:
+    image = Image.open('ufms_logo_negativo_rgb.png')
+    st.image(image, width=130)
+
 # pagina Home
 if (selected2 == "Home"):
     with st.empty():
         st.title('')
     with st.empty():
         st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-             r\n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
-    # header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
-    # with header_left:
-    #     image = Image.open('logo-pantanal.png')
-    #     # Exibindo a imagem
-    #     st.image(image, width=260)
-    # with header_mid:
-    #     st.title('Detecção de fraudes em cartões de crédito')
-
-    # with header_right:
-    #     image = Image.open('ufms_logo_negativo_rgb.png')
-    #     st.image(image, width=130)
-    # with st.empty():
-    #     st.title('')
-    # with st.empty():
-    #     st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-    #          \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
+             \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
 
 # pagina Dados usados
 if (selected2 == "Dados Usados"):
-    st.header("Dados Utilizados")
-    st.write("Falar sobre os dados que utilizamos para fazer a analise")
+    st.write("pagina DADOS")
    
 # pagina Graficos
 if (selected2 == "Gráficos"):
@@ -153,7 +127,7 @@ if (selected2 == "Gráficos"):
     Q1, Q2 = st.columns(2)
 
     with Q1:
-        st.subheader('Distribuição das transações')
+        st.header('Distribuição das transações')
 
         class_counts = df['Class'].value_counts()
         class_counts.rename({'count': 'Quantidade'}, inplace=True)
@@ -180,7 +154,7 @@ if (selected2 == "Gráficos"):
         st.plotly_chart(fig, use_container_width=True)
 
     with Q2:
-        st.subheader('Resumo estatístico das transações')
+        st.header('Resumo estatístico das transações')
         my_layout = Layout(hoverlabel = dict(bgcolor = '#FFFFFF'), template='simple_white')
 
         fig = go.Figure(layout = my_layout)
@@ -215,8 +189,8 @@ if (selected2 == "Gráficos"):
 
 
     with st.container():    
-        st.subheader('Transações normais')
-        st.write('#### As transações normais têm seus valores mais comuns entre \$1,00 e \$15,00 apenas.')
+        st.header('Transações normais')
+        st.write('Transações normais')
         
         valoresTransacoesNormais = df[['Amount', 'Class']]
         valoresTransacoesNormais = valoresTransacoesNormais[valoresTransacoesNormais['Class'] == 0]
@@ -231,7 +205,7 @@ if (selected2 == "Gráficos"):
         y = valoresTransacoesNormais['count'][:10]
 
         colors = ['#0C3559', '#033F73', '#033E8C', '#0378A6', '#049DBF',
-            '#3698BF', '#A6ACE6', '#A0C9D9 ', '#DEE0FC', '#F2F2F2']
+            '#3698BF', '#A0C9D9', '#A6ACE6', '#DEE0FC', '#F2F2F2']
 
         my_layout = Layout(hoverlabel=dict(
                     bgcolor='#FFFFFF'),
@@ -262,9 +236,9 @@ if (selected2 == "Gráficos"):
                 'xanchor': 'center',
                 'yanchor': 'top',
                 },
-            # title_text='Valores mais comuns das transações normais',
-            # title_font_color='#0C3559',
-            # title_font_size=20,
+            title_text='Valores mais comuns das transações normais',
+            title_font_color='#0C3559',
+            title_font_size=20,
             plot_bgcolor='rgba(0,0,0,0)',
             yaxis_range=[0,15000],
             xaxis=dict(
@@ -281,8 +255,8 @@ if (selected2 == "Gráficos"):
         
 
     with st.container():
-        st.subheader('Transações fraudulentas')
-        st.write('##### Aqui se vê quais os valores mais comuns das transações fraudulentas. Uma observação interessante é que a maior parte delas tem valor de $1,00, por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
+        st.header('Transações fraudulentas')
+        st.write('##### Aqui se observa quais os valores mais comuns das transações fraudulentas. Uma observação (talvez curiosa) é que a maior parte delas tem valor de $1,00, talvez por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
             
         valoresTransacoesFraudulentas = df[['Amount', 'Class']]
         valoresTransacoesFraudulentas = valoresTransacoesFraudulentas[valoresTransacoesFraudulentas['Class'] == 1]
@@ -327,9 +301,9 @@ if (selected2 == "Gráficos"):
                 'xanchor': 'center',
                 'yanchor': 'top',
                 },
-            # title_text='Valores mais comuns das transações fraudulentas',
-            # title_font_color='#0C3559',
-            # title_font_size=20,
+            title_text='Valores mais comuns das transações fraudulentas',
+            title_font_color='#0C3559',
+            title_font_size=20,
             plot_bgcolor='rgba(0,0,0,0)',
             yaxis_range=[0,125],
             xaxis=dict(
@@ -344,6 +318,7 @@ if (selected2 == "Gráficos"):
 
         st.plotly_chart(fig, use_container_width=True)
         
+
     with st.container():
 
         st.header('Transações por tempo')
@@ -493,34 +468,68 @@ if (selected2 == "Gráficos"):
         
         st.pyplot(plt, use_container_width=False)
         
+        
+    st.header('Matriz de confusão do XGBoost')
+    st.write('##### texto')
+    
+    df = df.drop_duplicates()
+    X = df.drop('Class', axis = 1)
+    y = df['Class']
+    
+    borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
+    
+    X_over,y_over = borderLineSMOTE.fit_resample(X, y)
+    
+    rus = RandomUnderSampler()
+    X_under, y_under = rus.fit_resample(X_over, y_over)
+    
+    X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True)
+    scaler = StandardScaler()
+
+    X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
+    X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
+
+    X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
+    X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
+
+    X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
+    X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
+    
+    plt.figure(figsize=(2, 2))
+
+    modelXGB = xgb.XGBClassifier(n_estimators     = 125,
+                             max_depth        = 6,
+                             learning_rate    = 0.3,
+                             subsample        = 1,
+                             colsample_bytree = 1,
+                             reg_alpha        = 0,
+                             reg_lambda       = 0,
+                             scale_pos_weight = 1,)
+    
+    modelXGB.fit(X_train, y_train)
+    y_pred_xgb = modelXGB.predict(X_test)
+    matriz = confusion_matrix(y_test, y_pred_xgb)
+    sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
+
+
+    plt.title('Matriz de confusão do XGBoost',
+            fontsize = 6,
+            color = '#000000',
+            pad= 5,
+            fontweight= 'bold')
+
+    plt.xlabel('Previsão',fontsize = 2, color= '#000000')
+    plt.ylabel('Valor real'  ,fontsize = 2, color= '#000000')
+
+
+    #plt.show()
+    #st.plotly_chart(plt, use_container_width=True)
+    
+    st.pyplot(plt, use_container_width=False)
 
 # pagina sobre
 if (selected2 == "Sobre"):
-    st.header("Sobre")
-    
-    st.write("texto sobre o projeto")
-    
-    st.subheader("Integrantes")
-    st.write("Projeto realizado por:")    
-    
-    perfil1, perfil2, perfil3, perfil4 = st.columns(4)
-    
-    with perfil1:            
-        st.image("imagens/rodrigo.png", width=300)
-        st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br')
-
-    with perfil2:
-        st.image("imagens/vitor.png", width=300)
-        st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com')
-        
-    with perfil3:
-        st.image("imagens/icaro.png", width=300)
-        st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com')
-        
-    with perfil4:
-        st.image("imagens/marcelo.png", width=300)
-        st.write('#### **_Marcelo Ferreira Borba_** \n\nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br')
-
+    st.write("pagina sobre")
 
     
 
