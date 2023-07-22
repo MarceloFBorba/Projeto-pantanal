@@ -503,23 +503,23 @@ if (selected2 == "Sobre"):
     st.subheader("Integrantes")
     st.write("Projeto realizado por:")    
     
-    perfil1, perfil2, perfil3, perfil4 = st.columns(4)
+    perfil1, perfil2, perfil3, perfil4 = st.columns(4, gap= "large")
     
     with perfil1:            
-        st.image("imagens/rodrigo.png", width=300)
-        st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br')
+        st.image("imagens/rodrigo.png", width=250)
+        st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br \n\n GitHub: \n\n Linkdin:  ')
 
     with perfil2:
-        st.image("imagens/vitor.png", width=300)
-        st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com')
+        st.image("imagens/vitor.png", width=250)
+        st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n GitHub: \n\n Linkdin:  ')
         
     with perfil3:
-        st.image("imagens/icaro.png", width=300)
-        st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com')
+        st.image("imagens/icaro.png", width=250)
+        st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n GitHub: \n\n Linkdin:  ')
         
     with perfil4:
-        st.image("imagens/marcelo.png", width=300)
-        st.write('#### **_Marcelo Ferreira Borba_** \n\nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br')
+        st.image("imagens/marcelo.png", width=250)
+        st.write('#### **_Marcelo Ferreira Borba_** \n\nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n\n GitHub: \n\n Linkdin:  ')
 
 
     
