@@ -1,0 +1,9 @@
+pandas
+numpy
+matplotlib
+seaborn
+plotly
+bar_chart_race
+jinja2
+xgboost
+pickle
