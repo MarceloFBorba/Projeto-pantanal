@@ -521,14 +521,14 @@ if (selected2 == "Sobre"):
         
         url = "https://github.com/wrodrigohs"
         url2= "https://www.linkedin.com/in/wrodrigohs/"
-    
-        # link1, link2 = st.columns([1, 2])
-        # with link1:
-        if st.button(":violet[GitHub]",url):
-            webbrowser.open_new_tab(url) 
-        # with link2:           
-        if st.button( ":blue[Linkedin]",url2):
-            webbrowser.open_new_tab(url2)
+        with st.container():
+            # link1, link2 = st.columns([1, 2])
+            # with link1:
+                if st.button(":violet[GitHub]",url):
+                    webbrowser.open_new_tab(url) 
+            # with link2:           
+                if st.button( ":blue[Linkedin]",url2):
+                    webbrowser.open_new_tab(url2)
 
     with perfil2:
         st.image("imagens/vitor2.png", width=200)

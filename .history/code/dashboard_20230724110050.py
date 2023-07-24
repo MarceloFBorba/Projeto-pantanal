@@ -15,10 +15,7 @@ from numerize.numerize import numerize
 from streamlit_option_menu import option_menu
 
 from PIL import Image
-
 import webbrowser
-
-import pickle
 
 st.set_page_config(page_title='Pantanal.dev',
                    page_icon='logo-pantanal.png',
@@ -423,83 +420,77 @@ if (selected2 == "Gráficos"):
 
         st.write(plt.tight_layout(pad = 3.0))
 
-    with st.container():
-        st.header('Modelo')
-        model_path = 'xgboost_model.pkl'
-        # Carregar o modelo salvo em formato .pkl
-        with open(model_path, 'rb') as arquivo_pkl:
-            modelo_carregado = pickle.load(arquivo_pkl)
-    # from imblearn.under_sampling import RandomUnderSampler
-    # import sklearn.metrics as metrics
-    # from sklearn.model_selection import train_test_split
-    # import xgboost as xgb
-    # from imblearn.over_sampling  import BorderlineSMOTE
+    from imblearn.under_sampling import RandomUnderSampler
+    import sklearn.metrics as metrics
+    from sklearn.model_selection import train_test_split
+    import xgboost as xgb
+    from imblearn.over_sampling  import BorderlineSMOTE
 
-    # from sklearn.model_selection import train_test_split
-    # from sklearn.preprocessing   import StandardScaler
-    # from sklearn.metrics         import confusion_matrix
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing   import StandardScaler
+    from sklearn.metrics         import confusion_matrix
 
 
-    # Q3, Q4 = st.columns(2)
+    Q3, Q4 = st.columns(2)
 
-    # with Q3:
-    #     st.header('Matriz de confusão do XGBoost')
-    #     st.write('##### texto')
+    with Q3:
+        st.header('Matriz de confusão do XGBoost')
+        st.write('##### texto')
         
-    #     df = df.drop_duplicates()
-    #     X = df.drop('Class', axis = 1)
-    #     y = df['Class']
+        df = df.drop_duplicates()
+        X = df.drop('Class', axis = 1)
+        y = df['Class']
         
-    #     borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
+        borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
         
-    #     X_over,y_over = borderLineSMOTE.fit_resample(X, y)
+        X_over,y_over = borderLineSMOTE.fit_resample(X, y)
         
-    #     rus = RandomUnderSampler()
-    #     X_under, y_under = rus.fit_resample(X_over, y_over)
+        rus = RandomUnderSampler()
+        X_under, y_under = rus.fit_resample(X_over, y_over)
         
-    #     X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True)
-    #     scaler = StandardScaler()
+        X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True)
+        scaler = StandardScaler()
 
-    #     X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
-    #     X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
+        X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
+        X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
 
-    #     X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
-    #     X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
+        X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
+        X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
 
-    #     X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
-    #     X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
+        X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
+        X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
         
-    #     plt.figure(figsize=(2, 2))
+        plt.figure(figsize=(2, 2))
 
-    #     modelXGB = xgb.XGBClassifier(n_estimators     = 125,
-    #                             max_depth        = 6,
-    #                             learning_rate    = 0.3,
-    #                             subsample        = 1,
-    #                             colsample_bytree = 1,
-    #                             reg_alpha        = 0,
-    #                             reg_lambda       = 0,
-    #                             scale_pos_weight = 1,)
+        modelXGB = xgb.XGBClassifier(n_estimators     = 125,
+                                max_depth        = 6,
+                                learning_rate    = 0.3,
+                                subsample        = 1,
+                                colsample_bytree = 1,
+                                reg_alpha        = 0,
+                                reg_lambda       = 0,
+                                scale_pos_weight = 1,)
         
-    #     modelXGB.fit(X_train, y_train)
-    #     y_pred_xgb = modelXGB.predict(X_test)
-    #     matriz = confusion_matrix(y_test, y_pred_xgb)
-    #     sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
+        modelXGB.fit(X_train, y_train)
+        y_pred_xgb = modelXGB.predict(X_test)
+        matriz = confusion_matrix(y_test, y_pred_xgb)
+        sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
 
 
-    #     plt.title('Matriz de confusão do XGBoost',
-    #             fontsize = 6,
-    #             color = '#000000',
-    #             pad= 5,
-    #             fontweight= 'bold')
+        plt.title('Matriz de confusão do XGBoost',
+                fontsize = 6,
+                color = '#000000',
+                pad= 5,
+                fontweight= 'bold')
 
-    #     plt.xlabel('Previsão',fontsize = 2, color= '#000000')
-    #     plt.ylabel('Valor real'  ,fontsize = 2, color= '#000000')
+        plt.xlabel('Previsão',fontsize = 2, color= '#000000')
+        plt.ylabel('Valor real'  ,fontsize = 2, color= '#000000')
 
 
-    #     #plt.show()
-    #     #st.plotly_chart(plt, use_container_width=True)
+        #plt.show()
+        #st.plotly_chart(plt, use_container_width=True)
         
-    #     st.pyplot(plt, use_container_width=False)
+        st.pyplot(plt, use_container_width=False)
         
 
 # pagina sobre
@@ -520,15 +511,19 @@ if (selected2 == "Sobre"):
         st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br', use_column_width=True)
         
         url = "https://github.com/wrodrigohs"
+        if st.button(":violet[GitHub]", key="perfil1_button"):
+            webbrowser.open_new_tab(url)
         url2= "https://www.linkedin.com/in/wrodrigohs/"
-    
-        # link1, link2 = st.columns([1, 2])
-        # with link1:
-        if st.button(":violet[GitHub]",url):
-            webbrowser.open_new_tab(url) 
-        # with link2:           
-        if st.button( ":blue[Linkedin]",url2):
+        if st.button(":violet[GitHub]", key="perfil1_button2"):
             webbrowser.open_new_tab(url2)
+        
+        # link1, link2 = st.columns([1, 1])
+        # with link1:
+        #     if st.button(":violet[GitHub]",url):
+        #         webbrowser.open_new_tab(url) 
+        # with link2:           
+        #     if st.button( ":blue[Linkedin]",url2):
+        #         webbrowser.open_new_tab(url2)
 
     with perfil2:
         st.image("imagens/vitor2.png", width=200)
