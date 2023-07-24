@@ -15,11 +15,12 @@ from numerize.numerize import numerize
 from streamlit_option_menu import option_menu
 
 from PIL import Image
+import webbrowser
 
 st.set_page_config(page_title='Pantanal.dev',
                    page_icon='logo-pantanal.png',
                    layout='wide',
-                   initial_sidebar_state='collapsed'
+                   initial_sidebar_state='auto'
                    )
 
 # Instalar sidebar   
@@ -105,7 +106,7 @@ if (selected2 == "Home"):
 
 # pagina Dados usados
 if (selected2 == "Dados Usados"):
-    st.header("Dados Utilizados")
+    st.header(":blue[Dados Utilizados]")
     st.write("Falar sobre os dados que utilizamos para fazer a analise")
    
 # pagina Graficos
@@ -495,34 +496,100 @@ if (selected2 == "Gráficos"):
         
 
 # pagina sobre
-if (selected2 == "Sobre"):
-    st.header("Sobre")
+if (selected2 == "Sobre"):    
+    st.header(":blue[Sobre]")
     
-    st.write("texto sobre o projeto")
+    st.write('###### O Pantanal.Dev é um programa de capacitação imersiva em tecnologias inovadoras. No Módulo Onça Pintada, abordamos o campo de Data Science com diversas técnicas de mineração de dados, pré-processamento, transformações de dados, aprendizado de máquina e agrupamento de dados, com foco especial na Detecção de Fraude em Cartões de Crédito. \
+        \n ###### Este projeto foi totalmente feito com a Linguagem Python, com toda a sua flexibilidade, vasta biblioteca e comunidade ativa de desenvolvedores permitiram uma abordagem eficaz e eficiente na criação das soluções necessárias e foi utilizado o Streamit para a criação de um Web App interativo, facilitando a visualização dos dados. \
+        \n ###### O projeto foi desenvolvido por alunos da  :blue[Universidade Federal de Mato Grosso do Sul (UFMS)], em parceria com as empresas :blue[B3, PDtec, BLK e Neoway], com foco na aplicação prática de conhecimentos em Data Science para detecção de fraudes em transações de cartões de crédito.')
     
-    st.subheader("Integrantes")
-    st.write("Projeto realizado por:")    
+    st.subheader(":blue[Projeto realizado por:]")    
     
-    perfil1, perfil2, perfil3, perfil4 = st.columns(4, gap= "large")
+    perfil1, perfil2, perfil3, perfil4= st.columns(4, gap= "small")
     
-    with perfil1:            
-        st.image("imagens/rodrigo.png", width=250)
-        st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br \n\n GitHub: \n\n Linkdin:  ')
+    
+    with perfil1:
+                  
+        st.image("imagens/rodrigo1.png", width=200)
+        st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br', use_column_width=True)
+        
+        url = "https://www.google.com"
+        url2= "https://www.facebook.com"
+        
+        link1, link2 = st.columns([1, 3])
+        with link1:
+            if st.button(":violet[GitHub]",url):
+                webbrowser.open_new_tab(url) 
+        with link2:           
+            if st.button( ":blue[Linkedin]",url2):
+                webbrowser.open_new_tab(url2)
+
+            
 
     with perfil2:
-        st.image("imagens/vitor.png", width=250)
-        st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n GitHub: \n\n Linkdin:  ')
+        st.image("imagens/vitor2.png", width=200)
+        st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n  ', use_column_width=True )
+        
+        #links para GitHub e linkedin
+        url = "https://www.youtube.com"
+        url2= "https://www.telegram.com"
+
+        link1, link2 = st.columns([1, 3])
+        with link1:
+            if st.button(":violet[GitHub]",url):
+                webbrowser.open_new_tab(url) 
+        with link2:           
+            if st.button( ":blue[Linkedin]",url2):
+                webbrowser.open_new_tab(url2)
         
     with perfil3:
-        st.image("imagens/icaro.png", width=250)
-        st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n GitHub: \n\n Linkdin:  ')
+        st.image("imagens/icaro3.png", width=200)
+        st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n', use_column_width=True)
+        
+        url = "https://www.linkedin.com"
+        url2= "https://www.xbox.com"
+        
+        link1, link2 = st.columns([1, 3])
+        with link1:
+            if st.button(":violet[GitHub]",url):
+                webbrowser.open_new_tab(url) 
+        with link2:           
+            if st.button( ":blue[Linkedin]",url2):
+                webbrowser.open_new_tab(url2)
         
     with perfil4:
-        st.image("imagens/marcelo.png", width=250)
-        st.write('#### **_Marcelo Ferreira Borba_** \n\nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n\n GitHub: \n\n Linkdin:  ')
-
-
+        st.image("imagens/marcelo4.png", width=200)
+        st.write('#### **_Marcelo Ferreira Borba_** \nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n', use_column_width=True)
+        
+        url = "https://github.com/MarceloFBorba"
+        url2= "https://www.linkedin.com/in/marcelo-ferreira-dev/"
+        
+        link1, link2 = st.columns([1, 3])
+        with link1:
+            if st.button(":violet[GitHub]",url):
+                webbrowser.open_new_tab(url) 
+        with link2:           
+            if st.button( ":blue[Linkedin]",url2):
+                webbrowser.open_new_tab(url2)
+        
     
+    st.write(" #### Mentor do Projeto:")
+    
+    perfil5= st.container()
+    
+    with perfil5:
+        st.image("imagens/titos5.png", width=200)
+        st.write(" #### **_Bruno Laureano Titos Moreno_** \n\n Coordernador de Tecnologia na B3\n\n Email: bruno.moreno@b3.com.br")
+
+        url = "https://www.linkedin.com/in/bruno-titos-8b537abb/"
+        
+        if st.button( ":blue[Linkedin]",url):
+            webbrowser.open_new_tab(url) 
+
+        
+     
+    
+
 
 #         homens = df['eleitorado_masculino_percentual(%)']
 #         mulheres = df['eleitorado_feminino_percentual(%)']
