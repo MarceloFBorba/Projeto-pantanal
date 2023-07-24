@@ -20,10 +20,8 @@ from PIL import Image
 
 import webbrowser
 
-<<<<<<< HEAD
-=======
+
 import pickle
->>>>>>> 32e0496ea94d76cb2d3aa3d4f35083df900cee3c
 
 st.set_page_config(page_title='Pantanal.dev',
                    page_icon='logo-pantanal.png',
@@ -161,8 +159,9 @@ if (selected2 == "Gráficos"):
         
     Q1, Q2 = st.columns(2)
 
+# Distribuição das transações
     with Q1:
-        st.subheader('Distribuição das transações')
+        st.header(':blue[Distribuição das transações]')
 
         class_counts = df['Class'].value_counts()
         class_counts.rename({'count': 'Quantidade'}, inplace=True)
@@ -189,9 +188,9 @@ if (selected2 == "Gráficos"):
             
         st.plotly_chart(fig, use_container_width=True)
     
-
+# Resumo estatístico das transações
     with Q2:
-        st.subheader('Resumo estatístico das transações')
+        st.header(':blue[Resumo estatístico das transações]')
         my_layout = Layout(hoverlabel = dict(bgcolor = '#FFFFFF'), template='simple_white')
 
         fig = go.Figure(layout = my_layout)
@@ -224,10 +223,9 @@ if (selected2 == "Gráficos"):
             hoverlabel=dict(bgcolor='#FFFFFF'))
         st.plotly_chart(fig, use_container_width=True)
 
-
-
+# Transações normais
     with st.container():    
-        st.subheader('Transações normais')
+        st.header(':blue[Transações normais]')
         st.write('###### As transações normais têm seus valores mais comuns entre \$1,00 e \$15,00 apenas.')
         
         valoresTransacoesNormais = df[['Amount', 'Class']]
@@ -291,9 +289,9 @@ if (selected2 == "Gráficos"):
 
         st.plotly_chart(fig, use_container_width=True)
         
-
+# Transações fraudulentas
     with st.container():
-        st.subheader('Transações fraudulentas')
+        st.header(':blue[Transações fraudulentas]')
         st.write('###### Aqui se vê quais os valores mais comuns das transações fraudulentas. Uma observação interessante é que a maior parte delas tem valor de $1,00, por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
             
         valoresTransacoesFraudulentas = df[['Amount', 'Class']]
@@ -356,13 +354,15 @@ if (selected2 == "Gráficos"):
 
         st.plotly_chart(fig, use_container_width=True)
         
+# Transações por tempo        
     with st.container():
 
-        st.header('Transações por tempo')
-        st.write('###### texto ')    
+        st.header(':blue[Transações por tempo]')
+        st.write('###### No gráfico de transações normais podemos observar que grande parte das transações normais ocorrem no tempo entre 40000s e 80000s e entre 120000s e 160000s.\
+            \n ###### Já no gráfico de trasações fraudulentas, podemos observar que as transações fraudulentas possuim uma grande quantidade de transações fraudulentas, que são realizadas no tempo de 40000s e 90000s.')    
         fig, ax = plt.subplots(nrows=2, ncols = 1, figsize=(17, 8))
 
-        ax[0].hist(df.Time[df.Class == 0], bins = 30, color = '#2A8BF0', rwidth= 0.9)
+        ax[0].hist(df.Time[df.Class == 0], bins = 30, color = '#0088B7', rwidth= 0.9)
 
         ax[0].text(df.Time[df.Class == 0].min(), 18000, "Transações normais",
                 fontsize = 15,
@@ -377,7 +377,7 @@ if (selected2 == "Gráficos"):
 
         ax[0].margins(x=0)
                 
-        ax[1].hist(df.Time[df.Class == 1], bins = 30, color= '#F03131', rwidth= 0.9)
+        ax[1].hist(df.Time[df.Class == 1], bins = 30, color= '#5FC2D9', rwidth= 0.9)
 
         ax[1].text(df.Time[df.Class == 1].min(), 55, "Transações fraudulentas",
                 fontsize = 15,
@@ -396,14 +396,14 @@ if (selected2 == "Gráficos"):
 
         st.pyplot(fig, use_container_width=True)
         
-
-
+# Transações por valor
     with st.container():
-        st.header('Transações por valor')
-        st.write('###### texto')  
+        st.header(':blue[Transações por valor]')
+        st.write('###### Nos gráficos de transações por valor podemos observar as transações normais são todos abaixo de $3000. \
+            \n ###### Já no gráfico de transações Fraudulentas podemos obsevar que grande parte das transações são de $0 até $750, tendo o seu grande volume em valores abaixo de $50.')  
         fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(17, 8))
 
-        ax[0].hist(df.Amount[df.Class == 0], bins = 30, color = '#2A8BF0', rwidth= 0.9)
+        ax[0].hist(df.Amount[df.Class == 0], bins = 30, color = '#0088B7', rwidth= 0.9)
 
         ax[0].text(df.Amount[df.Class == 0].min(), 310000, "Transações normais",
                 fontsize = 15,
@@ -418,7 +418,7 @@ if (selected2 == "Gráficos"):
 
         ax[0].margins(x=0)
 
-        ax[1].hist(df.Amount[df.Class == 1], bins = 30, color = '#F03131', rwidth= 0.9)
+        ax[1].hist(df.Amount[df.Class == 1], bins = 30, color = '#5FC2D9', rwidth= 0.9)
 
         ax[1].text(df.Amount[df.Class == 1].min(), 350, "Transações fraudulentas",
                 fontsize = 15,
@@ -437,12 +437,15 @@ if (selected2 == "Gráficos"):
         
         st.pyplot(fig, use_container_width=True)
 
+# Modelo xgboost
     with st.container():
         st.header('Modelo')
         model_path = 'xgboost_model.pkl'
         # Carregar o modelo salvo em formato .pkl
         with open(model_path, 'rb') as arquivo_pkl:
             modelo_carregado = pickle.load(arquivo_pkl)
+            
+            
     # from imblearn.under_sampling import RandomUnderSampler
     # import sklearn.metrics as metrics
     # from sklearn.model_selection import train_test_split
