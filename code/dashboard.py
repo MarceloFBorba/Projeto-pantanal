@@ -11,11 +11,14 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.graph_objs import Layout
 
+import sklearn.metrics as metrics
+
 from numerize.numerize import numerize
 from streamlit_option_menu import option_menu
 
 from PIL import Image
 import webbrowser
+
 
 st.set_page_config(page_title='Pantanal.dev',
                    page_icon='logo-pantanal.png',
@@ -112,7 +115,7 @@ if (selected2 == "Dados Usados"):
 # pagina Graficos
 if (selected2 == "Gráficos"):
     file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
-    # file_path = "creditcard.csv"
+    #file_path = "creditcard.csv"
     df = pd.read_csv(file_path)
     
     total1, total2, total3, total4, total5 = st.columns(5, gap='large')
@@ -173,12 +176,14 @@ if (selected2 == "Gráficos"):
         ))
 
         fig.update_layout(
-        xaxis=dict(
+            height = 500,
+            xaxis=dict(
                 tickvals=[0, 1],
             ticktext=['Normal', 'Fraude',])
         )
             
         st.plotly_chart(fig, use_container_width=True)
+    
 
     with Q2:
         st.subheader('Resumo estatístico das transações')
@@ -208,6 +213,7 @@ if (selected2 == "Gráficos"):
                 'xanchor': 'center',
                 'yanchor': 'top',
                 },
+            title_text= '',
             yaxis_range=[-10,500],
             showlegend=False,
             hoverlabel=dict(bgcolor='#FFFFFF'))
@@ -217,7 +223,7 @@ if (selected2 == "Gráficos"):
 
     with st.container():    
         st.subheader('Transações normais')
-        st.write('#### As transações normais têm seus valores mais comuns entre \$1,00 e \$15,00 apenas.')
+        st.write('###### As transações normais têm seus valores mais comuns entre \$1,00 e \$15,00 apenas.')
         
         valoresTransacoesNormais = df[['Amount', 'Class']]
         valoresTransacoesNormais = valoresTransacoesNormais[valoresTransacoesNormais['Class'] == 0]
@@ -263,7 +269,7 @@ if (selected2 == "Gráficos"):
                 'xanchor': 'center',
                 'yanchor': 'top',
                 },
-            # title_text='Valores mais comuns das transações normais',
+            title_text='Valores mais comuns das transações normais',
             # title_font_color='#0C3559',
             # title_font_size=20,
             plot_bgcolor='rgba(0,0,0,0)',
@@ -283,7 +289,7 @@ if (selected2 == "Gráficos"):
 
     with st.container():
         st.subheader('Transações fraudulentas')
-        st.write('##### Aqui se vê quais os valores mais comuns das transações fraudulentas. Uma observação interessante é que a maior parte delas tem valor de $1,00, por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
+        st.write('###### Aqui se vê quais os valores mais comuns das transações fraudulentas. Uma observação interessante é que a maior parte delas tem valor de $1,00, por ser um valor baixo e pouco provável de ser barrado.Outra observação é que as transações fraudulentas, em sua maioria, são de valores baixos.')
             
         valoresTransacoesFraudulentas = df[['Amount', 'Class']]
         valoresTransacoesFraudulentas = valoresTransacoesFraudulentas[valoresTransacoesFraudulentas['Class'] == 1]
@@ -328,7 +334,7 @@ if (selected2 == "Gráficos"):
                 'xanchor': 'center',
                 'yanchor': 'top',
                 },
-            # title_text='Valores mais comuns das transações fraudulentas',
+            title_text='Valores mais comuns das transações fraudulentas',
             # title_font_color='#0C3559',
             # title_font_size=20,
             plot_bgcolor='rgba(0,0,0,0)',
@@ -348,13 +354,13 @@ if (selected2 == "Gráficos"):
     with st.container():
 
         st.header('Transações por tempo')
-        st.write('##### texto')    
-        fig, ax = plt.subplots(nrows=2, ncols = 1, figsize=(10, 8))
+        st.write('###### texto ')    
+        fig, ax = plt.subplots(nrows=2, ncols = 1, figsize=(17, 8))
 
         ax[0].hist(df.Time[df.Class == 0], bins = 30, color = '#2A8BF0', rwidth= 0.9)
 
         ax[0].text(df.Time[df.Class == 0].min(), 18000, "Transações normais",
-                fontsize = 20,
+                fontsize = 15,
                 color = '#3f3f4e',
                 fontweight= 'bold')
 
@@ -365,35 +371,34 @@ if (selected2 == "Gráficos"):
         ax[0].spines['right'].set_visible(False)
 
         ax[0].margins(x=0)
-
+                
         ax[1].hist(df.Time[df.Class == 1], bins = 30, color= '#F03131', rwidth= 0.9)
 
         ax[1].text(df.Time[df.Class == 1].min(), 55, "Transações fraudulentas",
-                fontsize = 20,
+                fontsize = 15,
                 color = '#3f3f4e',
                 fontweight= 'bold')
 
         ax[1].set_xlabel('Tempo(s)', fontsize = 12, color= '#000000')
         ax[1].set_ylabel('Transações', fontsize = 12, color= '#000000')
-
         ax[1].spines['top'].set_visible(False)
         ax[1].spines['right'].set_visible(False)
 
         ax[1].margins(x=0)
-
-        st.write(plt.tight_layout(pad = 3.0))
         
+        plt.tight_layout(pad = 3.0)
         
+        st.pyplot(fig, use_container_width=True)
         
     with st.container():
         st.header('Transações por valor')
-        st.write('##### texto')  
-        fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(10, 8))
+        st.write('###### texto')  
+        fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(17, 8))
 
         ax[0].hist(df.Amount[df.Class == 0], bins = 30, color = '#2A8BF0', rwidth= 0.9)
 
         ax[0].text(df.Amount[df.Class == 0].min(), 310000, "Transações normais",
-                fontsize = 20,
+                fontsize = 15,
                 color = '#3f3f4e',
                 fontweight= 'bold')
 
@@ -408,7 +413,7 @@ if (selected2 == "Gráficos"):
         ax[1].hist(df.Amount[df.Class == 1], bins = 30, color = '#F03131', rwidth= 0.9)
 
         ax[1].text(df.Amount[df.Class == 1].min(), 350, "Transações fraudulentas",
-                fontsize = 20,
+                fontsize = 15,
                 color = '#3f3f4e',
                 fontweight= 'bold')
 
@@ -419,8 +424,10 @@ if (selected2 == "Gráficos"):
         ax[1].spines['right'].set_visible(False)
 
         ax[1].margins(x=0)
-
-        st.write(plt.tight_layout(pad = 3.0))
+        
+        plt.tight_layout(pad = 3.0)
+        
+        st.pyplot(fig, use_container_width=True)
 
     from imblearn.under_sampling import RandomUnderSampler
     import sklearn.metrics as metrics
