@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.metrics import confusion_matrix
 
 import streamlit as st
 from streamlit_folium import st_folium
@@ -19,8 +20,7 @@ from streamlit_option_menu import option_menu
 from PIL import Image
 
 import webbrowser
-
-
+import xgboost as xgb
 import pickle
 
 st.set_page_config(page_title='Pantanal.dev',
@@ -28,17 +28,8 @@ st.set_page_config(page_title='Pantanal.dev',
                    layout='wide',
                    initial_sidebar_state='auto'
                    )
-
 # Instalar sidebar   
 # pip install streamlit-option-menu
-
-#selected2 = option_menu(None, ["Home", "Dados Usados", "Gráficos", "Sobre"], 
-#    icons=['house', 'database', 'graph-up', 'info-circle'], 
-#    menu_icon="cast", default_index=0, orientation="horizontal",
-#    styles={
-#        "nav-link-selected": {"background-color": "#0378A6"}
-#    }
-#    )
 
 with st.sidebar:
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
@@ -92,7 +83,7 @@ if (selected2 == "Home"):
         st.title('')
     with st.empty():
         st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-             r\n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
+            \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
     # header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     # with header_left:
     #     image = Image.open('logo-pantanal.png')
@@ -113,13 +104,38 @@ if (selected2 == "Home"):
 # pagina Dados usados
 if (selected2 == "Dados Usados"):
     st.header(":blue[Dados Utilizados]")
-    st.write("Falar sobre os dados que utilizamos para fazer a analise")
-   
+    st.write("O desenvolvimento de algoritmos e modelos eficazes de detecção de fraudes é essencial. Um conjunto de dados valioso para esse propósito é o conjunto de dados de transações de cartões de crédito em setembro de 2013, realizado por titulares de cartões europeus. Este conjunto de dados contém 284.807 transações, das quais 492 foram rotuladas como fraudes. A classe de fraudes representa apenas 0,172% de todas as transações, tornando o conjunto de dados altamente desequilibrado.\
+        \n\nAs variáveis de entrada neste conjunto de dados são numéricas e foram obtidas através de uma transformação PCA, exceto pelas características 'Time' (Tempo) e 'Amount' (Valor). A característica 'Time' representa os segundos decorridos entre cada transação e a primeira transação no conjunto de dados, enquanto 'Amount' é o valor da transação. A característica 'Class' é a variável de resposta, assumindo o valor 1 em caso de fraude e 0 caso contrário.\
+        \n\n#### Processo de manipulação dos dados\
+        \n\nO conjunto de dados foi dividido em conjuntos de treino e teste, e precauções foram tomadas para evitar que dados de treino se misturassem com dados de teste, utilizando a função **_drop_duplicates_**. Além disso, para combater o desequilíbrio entre transações normais e fraudulentas, o oversampling foi aplicado às transações fraudulentas, criando dados sintéticos que representam 10% do número de transações normais. Em seguida, o undersampling foi utilizado para reduzir o número de transações normais e equilibrar os dados.\
+        \n\nDiferentes algoritmos foram empregados para treinar o modelo de detecção de fraudes, incluindo a regressão logística, que atribui probabilidades de classificação, a árvore de decisão, um modelo de aprendizado supervisionado que divide os dados em subconjuntos puros, e o XGBoost, que combina vários modelos de árvore de decisão para criar um modelo mais poderoso.\
+        \n\n#### Conclusão\
+        \n\nA árvore de decisão se destacou na interpretação dos resultados, fornecendo uma visão clara das características mais importantes que levaram à classificação das transações como fraudulentas. Isso pode ser especialmente útil para projetos com dados não anonimizados, permitindo a identificação e o monitoramento de variáveis sensíveis relacionadas às transações possivelmente fraudulentas.\
+        \n\nPor outro lado, o XGBoost apresentou os melhores resultados em todas as métricas, especialmente em relação aos falsos positivos, demonstrando uma melhora na predição com pequenas alterações nos parâmetros padrões. Além disso, o XGBoost forneceu informações sobre as variáveis mais influentes em suas decisões.\
+        \n\nEm suma, a combinação de diferentes técnicas de tratamento de dados e a utilização de algoritmos variados contribuíram para a criação de um modelo de detecção de fraudes eficiente e robusto, que pode ser valioso tanto para a prevenção quanto para a compreensão de atividades fraudulentas em transações de cartões de crédito.\
+        \n\n#### Bibliografia\
+        \n\nDevido a questões de confidencialidade, as características originais e informações de fundo sobre os dados não podem ser fornecidas. No entanto, pesquisadores têm trabalhado nesse campo e disponibilizaram um simulador de dados de transações para auxiliar no desenvolvimento de metodologias de detecção de fraudes em cartões de crédito, e também pisquisadores aperfeiçoando cada vez mais o campo de Data Science.\
+        \n\nDentre os trabalhos relevantes sobre o tema, destacam-se:\
+        \n\n 1 - Andrea Dal Pozzolo, Olivier Caelen, Reid A. Johnson and Gianluca Bontempi. [Calibrating Probability with Undersampling for Unbalanced Classification](https://www.researchgate.net/publication/283349138_Calibrating_Probability_with_Undersampling_for_Unbalanced_Classification). Simpósio de Inteligência Computacional e Mineração de Dados (CIDM), IEEE, 2015\
+        \n\n 2 - Dal Pozzolo, Andrea; Caelen, Olivier; Le Borgne, Yann-Ael; Waterschoot, Serge; Bontempi, Gianluca. [Learned lessons in credit card fraud detection from a practitioner perspective](https://www.researchgate.net/publication/260837261_Learned_lessons_in_credit_card_fraud_detection_from_a_practitioner_perspective), Sistemas especialistas e suas aplicações,41,10,4915-4928,2014, Pergamon\
+        \n\n 3 - Dal Pozzolo, Andrea; Boracchi, Giacomo; Caelen, Olivier; Alippi, Cesare; Bontempi, Gianluca. [Credit card fraud detection: a realistic modeling and a novel learning strategy](https://www.researchgate.net/publication/319867396_Credit_Card_Fraud_Detection_A_Realistic_Modeling_and_a_Novel_Learning_Strategy), IEEE transações em redes neurais e sistemas de aprendizagem,29,8,3784-3797,2018,IEEE\
+        \n\n 4 - Dal Pozzolo, Andrea [Adaptive Machine learning for credit card fraud detection](https://di.ulb.ac.be/map/adalpozz/pdf/Dalpozzolo2015PhD.pdf), tese de ULB MLG PhD (supervisionado por G. Bontempi)\
+        \n\n 5 - Carcillo, Fabrizio; Dal Pozzolo, Andrea; Le Borgne, Yann-Aël; Caelen, Olivier; Mazzer, Yannis; Bontempi, Gianluca. [Scarff: a scalable framework for streaming credit card fraud detection with Spark](https://www.researchgate.net/publication/319616537_SCARFF_a_Scalable_Framework_for_Streaming_Credit_Card_Fraud_Detection_with_Spark), Information fusion,41, 182-194,2018,Elsevier\
+        \n\n 6 - Carcillo, Fabrizio; Le Borgne, Yann-Aël; Caelen, Olivier; Bontempi, Gianluca. [Streaming active learning strategies for real-life credit card fraud detection: assessment and visualization](https://www.researchgate.net/publication/332180999_Deep-Learning_Domain_Adaptation_Techniques_for_Credit_Cards_Fraud_Detection), Jornal Internacional de Ciência de Dados e Análise, 5,4,285-300,2018,Springer International Publishing\
+        \n\n 7 - Bertrand Lebichot, Yann-Aël Le Borgne, Liyun He, Frederic Oblé, Gianluca Bontempi [Deep-Learning Domain Adaptation Techniques for Credit Cards Fraud Detection](https://www.researchgate.net/publication/332180999_Deep-Learning_Domain_Adaptation_Techniques_for_Credit_Cards_Fraud_Detection), INNSBDDL 2019: Avanços recentes em Big Data e Deep Learning, pp 78-88, 2019\
+        \n\n 8 - Fabrizio Carcillo, Yann-Aël Le Borgne, Olivier Caelen, Frederic Oblé, Gianluca Bontempi [Combining Unsupervised and Supervised Learning in Credit Card Fraud Detection](https://www.researchgate.net/publication/333143698_Combining_Unsupervised_and_Supervised_Learning_in_Credit_Card_Fraud_Detection) Information Sciences, 2019\
+        \n\n 9 - Yann-Aël Le Borgne, Gianluca Bontempi [Reproducible machine Learning for Credit Card Fraud Detection - Practical Handbook](https://www.researchgate.net/publication/351283764_Reproducible_Machine_Learning_for_Credit_Card_Fraud_Detection_-_Practical_Handbook)\
+        \n\n10 - Bertrand Lebichot, Gianmarco Paldino, Wissam Siblini, Liyun He, Frederic Oblé, Gianluca Bontempi [Incremental learning strategies for credit cards fraud detection](https://www.researchgate.net/publication/352275169_Incremental_learning_strategies_for_credit_cards_fraud_detection), Jornal Internacional de Ciência de Dados e Análise\
+        \n\n11 - Max Tingle, [Preventing Data Leakage in Your Machine Learning Model](https://towardsdatascience.com/preventing-data-leakage-in-your-machine-learning-model-9ae54b3cd1fb)")
+
+    
 # pagina Graficos
 if (selected2 == "Gráficos"):
     file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
     #file_path = "creditcard.csv"
     df = pd.read_csv(file_path)
+    
+    st.title(':blue[Gráficos]')
     
     total1, total2, total3, total4, total5 = st.columns(5, gap='large')
     with total1:
@@ -438,87 +454,116 @@ if (selected2 == "Gráficos"):
         st.pyplot(fig, use_container_width=True)
 
 # Modelo xgboost
+
     with st.container():
         st.header('Modelo')
         model_path = 'xgboost_model.pkl'
         # Carregar o modelo salvo em formato .pkl
         with open(model_path, 'rb') as arquivo_pkl:
             modelo_carregado = pickle.load(arquivo_pkl)
+
+        y_pred = modelo_carregado.predict(x_teste)
+        y_true = y_test
+        cm = confusion_matrix(y_true, y_pred)
+        plt.figure(figsize=(8, 6))
+        
+        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+        
+        plt.xlabel('Previsão')
+        plt.ylabel('Verdadeiro')
+        
+        st.pyplot(plt)
+
+    
             
-            
-    # from imblearn.under_sampling import RandomUnderSampler
-    # import sklearn.metrics as metrics
-    # from sklearn.model_selection import train_test_split
-    # import xgboost as xgb
-    # from imblearn.over_sampling  import BorderlineSMOTE
 
-    # from sklearn.model_selection import train_test_split
-    # from sklearn.preprocessing   import StandardScaler
-    # from sklearn.metrics         import confusion_matrix
+    from imblearn.under_sampling import RandomUnderSampler
+    import sklearn.metrics as metrics
+    from sklearn.model_selection import train_test_split
+    import xgboost as xgb
+    from imblearn.over_sampling  import BorderlineSMOTE
+
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing   import StandardScaler
+    from sklearn.metrics         import confusion_matrix
 
 
-    # Q3, Q4 = st.columns(2)
+    Q3, Q4 = st.columns(2)
 
-    # with Q3:
-    #     st.header('Matriz de confusão do XGBoost')
-    #     st.write('##### texto')
+    with Q3:
+        st.header('Matriz de confusão do XGBoost')
+        st.write('##### texto')
         
-    #     df = df.drop_duplicates()
-    #     X = df.drop('Class', axis = 1)
-    #     y = df['Class']
+        df = df.drop_duplicates()
+        X = df.drop('Class', axis = 1)
+        y = df['Class']
         
-    #     borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
+        borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
         
-    #     X_over,y_over = borderLineSMOTE.fit_resample(X, y)
+        X_over,y_over = borderLineSMOTE.fit_resample(X, y)
         
-    #     rus = RandomUnderSampler()
-    #     X_under, y_under = rus.fit_resample(X_over, y_over)
+        rus = RandomUnderSampler()
+        X_under, y_under = rus.fit_resample(X_over, y_over)
         
-    #     X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True)
-    #     scaler = StandardScaler()
+        X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True)
+        scaler = StandardScaler()
 
-    #     X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
-    #     X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
+        X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
+        X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
 
-    #     X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
-    #     X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
+        X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
+        X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
 
-    #     X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
-    #     X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
+        X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
+        X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
         
-    #     plt.figure(figsize=(2, 2))
+        plt.figure(figsize=(2, 2))
 
-    #     modelXGB = xgb.XGBClassifier(n_estimators     = 125,
-    #                             max_depth        = 6,
-    #                             learning_rate    = 0.3,
-    #                             subsample        = 1,
-    #                             colsample_bytree = 1,
-    #                             reg_alpha        = 0,
-    #                             reg_lambda       = 0,
-    #                             scale_pos_weight = 1,)
+        modelXGB = xgb.XGBClassifier(n_estimators     = 100,
+                                max_depth        = 4,
+                                learning_rate    = 0.3,
+                                subsample        = 1,
+                                colsample_bytree = 1,
+                                reg_alpha        = 0,
+                                reg_lambda       = 0,
+                                scale_pos_weight = 1,)
         
-    #     modelXGB.fit(X_train, y_train)
-    #     y_pred_xgb = modelXGB.predict(X_test)
-    #     matriz = confusion_matrix(y_test, y_pred_xgb)
-    #     sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
+        modelXGB.fit(X_train, y_train)
+        y_pred_xgb = modelXGB.predict(X_test)
+        matriz = confusion_matrix(y_test, y_pred_xgb)
+        sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
 
 
-    #     plt.title('Matriz de confusão do XGBoost',
-    #             fontsize = 6,
-    #             color = '#000000',
-    #             pad= 5,
-    #             fontweight= 'bold')
+        plt.title('Matriz de confusão do XGBoost',
+                fontsize = 6,
+                color = '#000000',
+                pad= 5,
+                fontweight= 'bold')
 
-    #     plt.xlabel('Previsão',fontsize = 2, color= '#000000')
-    #     plt.ylabel('Valor real'  ,fontsize = 2, color= '#000000')
+        plt.xlabel('Previsão',fontsize = 4, color= '#000000')
+        plt.ylabel('Valor real'  ,fontsize = 4, color= '#000000')
 
 
-    #     #plt.show()
-    #     #st.plotly_chart(plt, use_container_width=True)
+        #plt.show()
+        #st.plotly_chart(plt, use_container_width=True)
         
-    #     st.pyplot(plt, use_container_width=False)
+        st.pyplot(plt, use_container_width=False)
+        
+        df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
+             'Previsao': y_pred_xgb,
+             'Rotulo_verdadeiro':y_test})
+        
+        
+        falsos_positivos = df_resultados[(df_resultados['Previsao'] == 1) & (df_resultados['Rotulo_verdadeiro'] == 0)]
         
 
+        st.table(falsos_positivos) 
+        print(falsos_positivos)
+        
+        
+        
+                    
+        
 # pagina sobre
 if (selected2 == "Sobre"):    
     st.header(":blue[Sobre]")
@@ -552,8 +597,8 @@ if (selected2 == "Sobre"):
         st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n  ', use_column_width=True )
         
         #links para GitHub e linkedin
-        url = "https://www.youtube.com"
-        url2= "https://www.telegram.com"
+        url = "https://github.com/VitorSousaS"
+        url2= "https://www.linkedin.com/in/vitor-de-sousa-santos/"
 
         # link1, link2 = st.columns([1, 3])
         # with link1:
@@ -567,8 +612,8 @@ if (selected2 == "Sobre"):
         st.image("imagens/icaro3.png", width=200)
         st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n', use_column_width=True)
         
-        url = "https://www.linkedin.com"
-        url2= "https://www.xbox.com"
+        url = "https://github.com/icarogga"
+        url2= "https://www.linkedin.com/in/ícaro-coelho-3a5b60206/"
         
         # link1, link2 = st.columns([1, 3])
         # with link1:
