@@ -46,7 +46,7 @@ with st.sidebar:
 if (selected2 != "Gráficos"):
     header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     with header_left:
-        image = Image.open("/imagens/logo-pantanal.png")
+        image = Image.open("imagens/logo-pantanal.png")
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
