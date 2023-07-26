@@ -53,7 +53,7 @@ if (selected2 != "Gráficos"):
         st.title('Detecção de fraudes em cartões de crédito')
 
     with header_right:
-        image = Image.open("imagens/ufms_logo_negativo_rgb.png")
+        image = Image.open("code/imagens/logo-pantanal.png")
         st.image(image, width=130)
 # pagina Home
 if (selected2 == "Home"):
@@ -118,35 +118,35 @@ if (selected2 == "Gráficos"):
     total1, total2, total3, total4, total5 = st.columns(5, gap='large')
 # Resultados resumidos
     with total1:
-        image = Image.open('sem-dinheiro.png')
+        image = Image.open('code/imagens/sem-dinheiro.png')
         # Exibindo a imagem
         total = df['Amount'].sum()
         st.image(image, use_column_width='Auto')
         st.metric(label='Valores totais (US$)', value=numerize(total))
 
     with total2:
-        image = Image.open('sem-dinheiro.png')
+        image = Image.open('code/imagens/sem-dinheiro.png')
         # Exibindo a imagem
         totalPerdas = df.Amount[df['Class'] == 1].sum()
         st.image(image, use_column_width='Auto')
         st.metric(label='Perdas com fraudes (US$)', value=numerize(totalPerdas))
 
     with total3:
-        image = Image.open('sem-dinheiro.png')
+        image = Image.open('code/imagens/sem-dinheiro.png')
         # Exibindo a imagem
         total = 500
         st.image(image, use_column_width='Auto')
         st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
 
     with total4:
-        image = Image.open('sem-dinheiro.png')
+        image = Image.open('code/imagens/sem-dinheiro.png')
         # Exibindo a imagem
         total = 500
         st.image(image, use_column_width='Auto')
         st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
 
     with total5:
-        image = Image.open('sem-dinheiro.png')
+        image = Image.open('code/imagens/sem-dinheiro.png')
         # Exibindo a imagem
         total = 500
         st.image(image, use_column_width='Auto')
@@ -555,7 +555,7 @@ if (selected2 == "Sobre"):
     
     with perfil1:
                   
-        st.image("imagens/rodrigo1.png", width=200)
+        st.image("code/imagens/rodrigo1.png", width=200)
         st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br', use_column_width=True)
         
         url = "https://github.com/wrodrigohs"
@@ -570,7 +570,7 @@ if (selected2 == "Sobre"):
             webbrowser.open_new_tab(url2)
 
     with perfil2:
-        st.image("imagens/vitor2.png", width=200)
+        st.image("code/imagens/vitor2.png", width=200)
         st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n  ', use_column_width=True )
         
         #links para GitHub e linkedin
@@ -586,7 +586,7 @@ if (selected2 == "Sobre"):
             webbrowser.open_new_tab(url2)
         
     with perfil3:
-        st.image("imagens/icaro3.png", width=200)
+        st.image("code/imagens/icaro3.png", width=200)
         st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n', use_column_width=True)
         
         url = "https://github.com/icarogga"
@@ -601,7 +601,7 @@ if (selected2 == "Sobre"):
             webbrowser.open_new_tab(url2)
         
     with perfil4:
-        st.image("imagens/marcelo4.png", width=200)
+        st.image("code/imagens/marcelo4.png", width=200)
         st.write('#### **_Marcelo Ferreira Borba_** \nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n', use_column_width=True)
         
         url = "https://github.com/MarceloFBorba"
@@ -620,7 +620,7 @@ if (selected2 == "Sobre"):
     perfil5= st.container()
     
     with perfil5:
-        st.image("imagens/titos5.png", width=200)
+        st.image("code/imagens/titos5.png", width=200)
         st.write(" #### **_Bruno Laureano Titos Moreno_** \n\n Coordernador de Tecnologia na B3\n\n Email: bruno.moreno@b3.com.br")
 
         url = "https://www.linkedin.com/in/bruno-titos-8b537abb/"
