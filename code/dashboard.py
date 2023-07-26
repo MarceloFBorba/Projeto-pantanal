@@ -444,14 +444,13 @@ if (selected2 == "Gráficos"):
 # modelo XGBoost funcionando
 
     from imblearn.under_sampling import RandomUnderSampler
-    import sklearn.metrics as metrics
     from sklearn.model_selection import train_test_split
     import xgboost as xgb
     from imblearn.over_sampling  import BorderlineSMOTE
 
     from sklearn.model_selection import train_test_split
     from sklearn.preprocessing   import StandardScaler
-    from sklearn.metrics         import confusion_matrix
+
 
 
     Q3, Q4 = st.columns(2)
