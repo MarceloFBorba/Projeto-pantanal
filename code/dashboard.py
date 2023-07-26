@@ -21,7 +21,7 @@ from PIL import Image
 
 import webbrowser
 import xgboost as xgb
-import pickle
+
 
 st.set_page_config(page_title='Pantanal.dev',
                    page_icon='logo-pantanal.png',
