@@ -46,14 +46,14 @@ with st.sidebar:
 if (selected2 != "Gráficos"):
     header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     with header_left:
-        image = Image.open("imagens\\logo-pantanal.png")
+        image = Image.open("code\imagens\logo-pantanal.png")
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
         st.title('Detecção de fraudes em cartões de crédito')
 
     with header_right:
-        image = Image.open("imagens\\ufms_logo_negativo_rgb.png")
+        image = Image.open("imagens/ufms_logo_negativo_rgb.png")
         st.image(image, width=130)
 # pagina Home
 if (selected2 == "Home"):
