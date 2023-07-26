@@ -10,5 +10,4 @@ scikit-learn
 streamlit
 numerize
 streamlit-option-menu
-Image
 xgboost
