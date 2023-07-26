@@ -7,7 +7,7 @@ import sklearn.metrics as metrics
 from sklearn.metrics import confusion_matrix
 
 import streamlit as st
-from streamlit_folium import st_folium
+# from streamlit_folium import st_folium
 import streamlit.components.v1 as components
 
 import plotly.express as px
