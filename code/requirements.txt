@@ -6,5 +6,4 @@ plotly
 bar_chart_race
 jinja2
 xgboost
-sklearn.metrics
-sklearn
+scikit-learn
