@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+import sklearn.metrics as metrics
 from sklearn.metrics import confusion_matrix
 
 import streamlit as st
@@ -12,7 +14,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.graph_objs import Layout
 
-import sklearn.metrics as metrics
 
 from numerize.numerize import numerize
 from streamlit_option_menu import option_menu
