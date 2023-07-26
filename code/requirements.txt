@@ -7,7 +7,6 @@ bar_chart_race
 jinja2
 xgboost
 scikit-learn
-make_subplots
 streamlit
 numerize
 streamlit-option-menu
