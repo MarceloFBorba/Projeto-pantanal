@@ -11,5 +11,4 @@ streamlit
 numerize
 streamlit-option-menu
 Image
-webbrowser
 xgboost
