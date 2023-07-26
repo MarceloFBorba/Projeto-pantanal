@@ -13,7 +13,7 @@ import streamlit.components.v1 as components
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.graph_objs import Layout
-from plotly.subplots import make_subplots
+# from plotly.subplots import make_subplots
 
 
 from numerize.numerize import numerize
@@ -391,19 +391,19 @@ if (selected2 == "Gráficos"):
 
         st.pyplot(fig, use_container_width=True)
         
-        fig = make_subplots(rows=2, cols=1)
+        # fig = make_subplots(rows=2, cols=1)
         
-        fig.add_trace(
-            go.Histogram(x=df.Time[df.Class == 0]),
-            row=1, col=1
-        )
+        # fig.add_trace(
+        #     go.Histogram(x=df.Time[df.Class == 0]),
+        #     row=1, col=1
+        # )
 
-        fig.add_trace(
-            go.Histogram(x=df.Time[df.Class == 1]),
-            row=2, col=1
-        )
+        # fig.add_trace(
+        #     go.Histogram(x=df.Time[df.Class == 1]),
+        #     row=2, col=1
+        # )
 
-        st.plotly_chart(fig, use_container_width=True)
+        # st.plotly_chart(fig, use_container_width=True)
         
 # Transações por valor
     with st.container():
