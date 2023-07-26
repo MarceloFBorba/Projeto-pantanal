@@ -7,12 +7,13 @@ import sklearn.metrics as metrics
 from sklearn.metrics import confusion_matrix
 
 import streamlit as st
-from streamlit_folium import st_folium
+# from streamlit_folium import st_folium
 import streamlit.components.v1 as components
 
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.graph_objs import Layout
+from plotly.subplots import make_subplots
 
 
 from numerize.numerize import numerize
@@ -45,14 +46,14 @@ with st.sidebar:
 if (selected2 != "Gráficos"):
     header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     with header_left:
-        image = Image.open('logo-pantanal.png')
+        image = Image.open("logo-pantanal.png")
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
         st.title('Detecção de fraudes em cartões de crédito')
 
     with header_right:
-        image = Image.open('ufms_logo_negativo_rgb.png')
+        image = Image.open("ufms_logo_negativo_rgb.png")
         st.image(image, width=130)
 # pagina Home
 if (selected2 == "Home"):
@@ -389,6 +390,20 @@ if (selected2 == "Gráficos"):
         plt.tight_layout(pad = 3.0)
 
         st.pyplot(fig, use_container_width=True)
+        
+        fig = make_subplots(rows=2, cols=1)
+        
+        fig.add_trace(
+            go.Histogram(x=df.Time[df.Class == 0]),
+            row=1, col=1
+        )
+
+        fig.add_trace(
+            go.Histogram(x=df.Time[df.Class == 1]),
+            row=2, col=1
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
         
 # Transações por valor
     with st.container():

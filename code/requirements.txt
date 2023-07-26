@@ -8,3 +8,4 @@ jinja2
 xgboost
 scikit-learn
 st_folium
+make_subplots
