@@ -9,3 +9,7 @@ xgboost
 scikit-learn
 streamlit
 numerize
+option_menu
+Image
+webbrowser
+xgboost
