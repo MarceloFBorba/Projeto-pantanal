@@ -583,7 +583,7 @@ if (selected2 == "Sobre"):
     
         # link1, link2 = st.columns([1, 2])
         # with link1:
-<<<<<<< HEAD
+
         # if st.button(":violet[GitHub]",url):
         #     webbrowser.open_new_tab(url) 
         # # with link2:           
@@ -596,13 +596,13 @@ if (selected2 == "Sobre"):
         st.write(f'<a href="{url}" target="_blank" style="text-decoration: none;"><button style="background-color: #000000; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">GitHub</button></a>', unsafe_allow_html=True)
 
         st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
-=======
+
         if st.button(":violet[GitHub]",url):
             webbrowser.open_new(url) 
         # with link2:           
         if st.button( ":blue[Linkedin]",url2):
             webbrowser.open_new_tab(url2)
->>>>>>> 7d141f3bec271ea4f39f40c8cb61bc8af1ef8a48
+
 
     with perfil2:
         # st.image("code/imagens/vitor2.png", width=200)
@@ -657,10 +657,7 @@ if (selected2 == "Sobre"):
         # with link1:
         # if st.button(":violet[GitHub]",url):
         #     webbrowser.open_new_tab(url) 
-<<<<<<< HEAD
-=======
-        st.markdown(f'<a href="{url}" target="_blank">:violet[GitHub]</a>', unsafe_allow_html=True)
->>>>>>> 7d141f3bec271ea4f39f40c8cb61bc8af1ef8a48
+
         # with link2:           
         # if st.button( ":blue[Linkedin]",url2):
         #     webbrowser.open_new_tab(url2)
@@ -684,5 +681,4 @@ if (selected2 == "Sobre"):
         #     webbrowser.open_new_tab(url) 
 
         st.write(f'<a href="{url}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
-
 
