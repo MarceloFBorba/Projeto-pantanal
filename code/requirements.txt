@@ -12,6 +12,7 @@ numerize
 streamlit-option-menu
 xgboost
 Image
+imblearn
 RandomUnderSampler
 webbrowser
 BorderlineSMOTE
