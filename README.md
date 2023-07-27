@@ -2,7 +2,7 @@
   <img src="code/imagens/logo.png" width=256 alt="GIMP">
   <br />
   <br />
-  Pantanal.dev | <a href="link para baixar">Acessar</a>
+  Pantanal.dev | <a href="https://project-creditcard-fraud-detection.streamlit.app">Acessar</a>
 </h1>
 
 <p align="center"><i>"Proteção avançada contra fraudes em cartões de crédito para instituições financeiras."</i></p>
