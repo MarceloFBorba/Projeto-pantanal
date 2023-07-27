@@ -61,7 +61,7 @@ if (selected2 != "Gráficos"):
 # pagina Home
 if (selected2 == "Home"):
     with st.empty():
-        st.title('')
+        st.header(':blue[introdução]')
     with st.empty():
         st.write('###### Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
             \n\n ###### Entre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.\
@@ -167,7 +167,7 @@ if (selected2 == "Gráficos"):
 # Distribuição das transações
     with Q1:
         st.header(':blue[Distribuição das transações]')
-        st.write('###### As transações normais têm seus valores mais comuns entre \$1,00 e \$15,00 apenas.')
+        st.write('###### Neste gráfico podemos observar a quantidade de transações fraudulentas em comparação com as transações normais.')
        
         class_counts = df['Class'].value_counts()
         class_counts.rename({'count': 'Quantidade'}, inplace=True)
@@ -198,6 +198,7 @@ if (selected2 == "Gráficos"):
     with Q2:
         st.header(':blue[Resumo estatístico das transações]')
         my_layout = Layout(hoverlabel = dict(bgcolor = '#FFFFFF'), template='simple_white')
+        st.write('###### Neste gráfico podemos observar o resumo estatístico das transações normais e fraudulentas.')
 
         fig = go.Figure(layout = my_layout)
         fig.add_trace(go.Box(
@@ -551,6 +552,7 @@ if (selected2 == "Gráficos"):
         
     with Q4:
         st.header('Identificação das colunas mais influêntes')
+        st.write('###### Neste gráfico podemos observar as colunas com maior influencia para a classificação.')
         
         xgb.plot_importance(modelXGB, grid=False, ylabel='Colunas',
             max_num_features=15,
