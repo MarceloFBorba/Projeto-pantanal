@@ -122,8 +122,7 @@ if (selected2 == "Gráficos"):
     total1, total2, total3, total4= st.columns(4, gap='large')
 # Resultados resumidos
     with total1:
-        image = Image.open('code/imagens/sem-dinheiro.png')
-        #image = Image.open('imagens/dinheiro-total-cortado.png')
+        image = Image.open('code/imagens/dinheiro-total-cortado.png')
         # Exibindo a imagem
         total = df['Amount'].sum()
         st.image(image, use_column_width='Auto')
@@ -148,8 +147,7 @@ if (selected2 == "Gráficos"):
         st.metric(label='Media dos valores fraudulentas (€)', value=numerize(media))
 
     with total4:
-        image = Image.open('code/imagens/sem-dinheiro.png')
-        #image = Image.open('imagens/dinheiro-repetido.png')
+        image = Image.open('code/imagens/dinheiro-repetido.png')
         # Exibindo a imagem
         moda = df.Amount[df['Class'] == 1].mode().values[0]
         
@@ -540,7 +538,7 @@ if (selected2 == "Gráficos"):
         # plt.show()
         #st.plotly_chart(plt, use_container_width=True)
  
-        st.pyplot(plt, use_container_width=False)
+        st.pyplot(plt, use_container_width=True)
         
         df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
              'Previsao': y_pred_xgb,
@@ -558,7 +556,7 @@ if (selected2 == "Gráficos"):
             max_num_features=15,
             title='15 colunas mais importantes para classificação')
         # plt.show()
-        st.pyplot(plt, use_container_width=False)
+        st.pyplot(plt, use_container_width=True)
             
 # pagina sobre
 if (selected2 == "Sobre"):    
@@ -574,8 +572,8 @@ if (selected2 == "Sobre"):
     
     with perfil1:
                   
-        # st.image("code/imagens/rodrigo1.png", width=200)
-        st.image("imagens/rodrigo1.png", width=200)
+        st.image("code/imagens/rodrigo1.png", width=200)
+        #st.image("imagens/rodrigo1.png", width=200)
         st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br', use_column_width=True)
         
         url = "https://github.com/wrodrigohs"
@@ -597,16 +595,10 @@ if (selected2 == "Sobre"):
 
         st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
 
-        if st.button(":violet[GitHub]",url):
-            webbrowser.open_new(url) 
-        # with link2:           
-        if st.button( ":blue[Linkedin]",url2):
-            webbrowser.open_new_tab(url2)
-
 
     with perfil2:
-        # st.image("code/imagens/vitor2.png", width=200)
-        st.image("imagens/vitor2.png", width=200)
+        st.image("code/imagens/vitor2.png", width=200)
+        #st.image("imagens/vitor2.png", width=200)
         st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n  ', use_column_width=True )
         
         #links para GitHub e linkedin
@@ -626,8 +618,8 @@ if (selected2 == "Sobre"):
         st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     with perfil3:
-        # st.image("code/imagens/icaro3.png", width=200)
-        st.image("imagens/icaro3.png", width=200)
+        st.image("code/imagens/icaro3.png", width=200)
+        #st.image("imagens/icaro3.png", width=200)
         st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n', use_column_width=True)
         
         url = "https://github.com/icarogga"
@@ -646,8 +638,8 @@ if (selected2 == "Sobre"):
         st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     with perfil4:
-        # st.image("code/imagens/marcelo4.png", width=200)
-        st.image("imagens/marcelo4.png", width=200)
+        st.image("code/imagens/marcelo4.png", width=200)
+        #st.image("imagens/marcelo4.png", width=200)
         st.write('#### **_Marcelo Ferreira Borba_** \nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n', use_column_width=True)
         
         url = "https://github.com/MarceloFBorba"
@@ -671,8 +663,8 @@ if (selected2 == "Sobre"):
     perfil5= st.container()
     
     with perfil5:
-        #st.image("code/imagens/titos5.png", width=200)
-        st.image("imagens/titos5.png", width=200)
+        st.image("code/imagens/titos5.png", width=200)
+        #st.image("imagens/titos5.png", width=200)
         st.write(" #### **_Bruno Laureano Titos Moreno_** \n\n Coordernador de Tecnologia na B3\n\n Email: bruno.moreno@b3.com.br")
 
         url = "https://www.linkedin.com/in/bruno-titos-8b537abb/"
