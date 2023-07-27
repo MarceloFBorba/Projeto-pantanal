@@ -12,4 +12,5 @@ numerize
 streamlit-option-menu
 xgboost
 Image
-
+imblearn
+webbrowser
