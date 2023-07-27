@@ -53,7 +53,7 @@ if (selected2 != "Gráficos"):
         st.title('Detecção de fraudes em cartões de crédito')
 
     with header_right:
-        image = Image.open("code/imagens/logo-pantanal.png")
+        image = Image.open("code/imagens/ufms_logo_negativo_rgb.png")
         st.image(image, width=130)
 # pagina Home
 if (selected2 == "Home"):
