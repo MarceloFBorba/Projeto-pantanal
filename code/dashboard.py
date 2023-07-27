@@ -63,9 +63,9 @@ if (selected2 == "Home"):
     with st.empty():
         st.title('')
     with st.empty():
-        st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-            \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.\
-            \n\nPortanto o desenvolvimento de algoritmos e modelos eficazes de detecção de fraudes é essencial. O conjunto de dados utilizado para o desenvolvimento de um modelo para esse propósito é o de transações de cartões de crédito datada de setembro de 2013, realizado por titulares de cartões europeus. Este conjunto de dados contém 284.807 transações, das quais 492 foram rotuladas como fraudes. A classe de fraudes representa apenas 0,172% de todas as transações, tornando o conjunto de dados altamente desequilibrado, sendo necessário sua manipulação.')
+        st.write('##### Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
+            \n\n ##### Entre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.\
+            \n\n ##### Portanto o desenvolvimento de algoritmos e modelos eficazes de detecção de fraudes é essencial. O conjunto de dados utilizado para o desenvolvimento de um modelo para esse propósito é o de transações de cartões de crédito datada de setembro de 2013, realizado por titulares de cartões europeus. Este conjunto de dados contém 284.807 transações, das quais 492 foram rotuladas como fraudes. A classe de fraudes representa apenas 0,172% de todas as transações, tornando o conjunto de dados altamente desequilibrado, sendo necessário sua manipulação.')
     # header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     # with header_left:
     #     image = Image.open('logo-pantanal.png')
@@ -144,7 +144,7 @@ if (selected2 == "Gráficos"):
         media = df.Amount[df['Class'] == 1].mean()
         
         st.image(image, use_column_width='Auto')
-        st.metric(label='Media dos valores fraudulentas (€)', value=numerize(media))
+        st.metric(label='##### Media dos valores fraudulentas (€)', value=numerize(media))
 
     with total4:
         image = Image.open('code/imagens/dinheiro-repetido.png')
@@ -152,7 +152,7 @@ if (selected2 == "Gráficos"):
         moda = df.Amount[df['Class'] == 1].mode().values[0]
         
         st.image(image, use_column_width='Auto')
-        st.metric(label='##### Valor mais comum em transações fraudulentas (€)', value=numerize(moda))
+        st.metric(label='##### Valor comum em transações fraudulentas (€)', value=numerize(moda))
 
     # with total5:
     #     # image = Image.open('code/imagens/sem-dinheiro.png')
@@ -538,7 +538,7 @@ if (selected2 == "Gráficos"):
         # plt.show()
         #st.plotly_chart(plt, use_container_width=True)
  
-        st.pyplot(plt, use_container_width=True)
+        st.pyplot(plt, use_container_width=False)
         
         df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
              'Previsao': y_pred_xgb,
