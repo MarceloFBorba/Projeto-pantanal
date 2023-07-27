@@ -609,8 +609,9 @@ if (selected2 == "Sobre"):
         
         # link1, link2 = st.columns([1, 3])
         # with link1:
-        if st.button(":violet[GitHub]",url):
-            webbrowser.open_new_tab(url) 
+        # if st.button(":violet[GitHub]",url):
+        #     webbrowser.open_new_tab(url) 
+        st.markdown(f'<a href="{url}" target="_blank">:violet[GitHub]</a>', unsafe_allow_html=True)
         # with link2:           
         if st.button( ":blue[Linkedin]",url2):
             webbrowser.open_new_tab(url2)
