@@ -12,5 +12,5 @@ numerize
 streamlit-option-menu
 xgboost
 Image
-imbalanced-learn 
+imbalanced-learn
 

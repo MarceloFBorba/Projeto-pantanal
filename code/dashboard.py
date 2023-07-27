@@ -42,11 +42,12 @@ with st.sidebar:
     }
     )
 
-
+# Header da página
 if (selected2 != "Gráficos"):
     header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     with header_left:
         image = Image.open("code/imagens/logo-pantanal.png")
+        #image = Image.open("imagens/logo-pantanal.png")
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
@@ -54,14 +55,17 @@ if (selected2 != "Gráficos"):
 
     with header_right:
         image = Image.open("code/imagens/ufms_logo_negativo_rgb.png")
+        #image = Image.open("imagens/ufms_logo_negativo_rgb.png")
         st.image(image, width=130)
+
 # pagina Home
 if (selected2 == "Home"):
     with st.empty():
         st.title('')
     with st.empty():
         st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-            \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
+            \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.\
+            \n\nPortanto o desenvolvimento de algoritmos e modelos eficazes de detecção de fraudes é essencial. O conjunto de dados utilizado para o desenvolvimento de um modelo para esse propósito é o de transações de cartões de crédito datada de setembro de 2013, realizado por titulares de cartões europeus. Este conjunto de dados contém 284.807 transações, das quais 492 foram rotuladas como fraudes. A classe de fraudes representa apenas 0,172% de todas as transações, tornando o conjunto de dados altamente desequilibrado, sendo necessário sua manipulação.')
     # header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     # with header_left:
     #     image = Image.open('logo-pantanal.png')
@@ -82,8 +86,7 @@ if (selected2 == "Home"):
 # pagina Dados usados
 if (selected2 == "Dados Usados"):
     st.header(":blue[Dados Utilizados]")
-    st.write("O desenvolvimento de algoritmos e modelos eficazes de detecção de fraudes é essencial. Um conjunto de dados valioso para esse propósito é o conjunto de dados de transações de cartões de crédito em setembro de 2013, realizado por titulares de cartões europeus. Este conjunto de dados contém 284.807 transações, das quais 492 foram rotuladas como fraudes. A classe de fraudes representa apenas 0,172% de todas as transações, tornando o conjunto de dados altamente desequilibrado.\
-        \n\nAs variáveis de entrada neste conjunto de dados são numéricas e foram obtidas através de uma transformação PCA, exceto pelas características 'Time' (Tempo) e 'Amount' (Valor). A característica 'Time' representa os segundos decorridos entre cada transação e a primeira transação no conjunto de dados, enquanto 'Amount' é o valor da transação. A característica 'Class' é a variável de resposta, assumindo o valor 1 em caso de fraude e 0 caso contrário.\
+    st.write("As variáveis de entrada neste conjunto de dados são numéricas e foram obtidas através de uma transformação PCA, exceto pelas características 'Time' (Tempo) e 'Amount' (Valor). A característica 'Time' representa os segundos decorridos entre cada transação e a primeira transação no conjunto de dados, enquanto 'Amount' é o valor da transação. A característica 'Class' é a variável de resposta, assumindo o valor 1 em caso de fraude e 0 caso contrário.\
         \n\n#### Processo de manipulação dos dados\
         \n\nO conjunto de dados foi dividido em conjuntos de treino e teste, e precauções foram tomadas para evitar que dados de treino se misturassem com dados de teste, utilizando a função **_drop_duplicates_**. Além disso, para combater o desequilíbrio entre transações normais e fraudulentas, o oversampling foi aplicado às transações fraudulentas, criando dados sintéticos que representam 10% do número de transações normais. Em seguida, o undersampling foi utilizado para reduzir o número de transações normais e equilibrar os dados.\
         \n\nDiferentes algoritmos foram empregados para treinar o modelo de detecção de fraudes, incluindo a regressão logística, que atribui probabilidades de classificação, a árvore de decisão, um modelo de aprendizado supervisionado que divide os dados em subconjuntos puros, e o XGBoost, que combina vários modelos de árvore de decisão para criar um modelo mais poderoso.\
@@ -105,8 +108,7 @@ if (selected2 == "Dados Usados"):
         \n\n 9 - Yann-Aël Le Borgne, Gianluca Bontempi [Reproducible machine Learning for Credit Card Fraud Detection - Practical Handbook](https://www.researchgate.net/publication/351283764_Reproducible_Machine_Learning_for_Credit_Card_Fraud_Detection_-_Practical_Handbook)\
         \n\n10 - Bertrand Lebichot, Gianmarco Paldino, Wissam Siblini, Liyun He, Frederic Oblé, Gianluca Bontempi [Incremental learning strategies for credit cards fraud detection](https://www.researchgate.net/publication/352275169_Incremental_learning_strategies_for_credit_cards_fraud_detection), Jornal Internacional de Ciência de Dados e Análise\
         \n\n11 - Max Tingle, [Preventing Data Leakage in Your Machine Learning Model](https://towardsdatascience.com/preventing-data-leakage-in-your-machine-learning-model-9ae54b3cd1fb)")
-
-    
+  
 # pagina Graficos
 if (selected2 == "Gráficos"):
     file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
@@ -115,49 +117,60 @@ if (selected2 == "Gráficos"):
     
     st.title(':blue[Gráficos]')
     
-    total1, total2, total3, total4, total5 = st.columns(5, gap='large')
+    # total1, total2, total3, total4, total5 = st.columns(5, gap='large')
+    
+    total1, total2, total3, total4= st.columns(4, gap='large')
 # Resultados resumidos
     with total1:
         image = Image.open('code/imagens/sem-dinheiro.png')
+        #image = Image.open('imagens/dinheiro-total-cortado.png')
         # Exibindo a imagem
         total = df['Amount'].sum()
         st.image(image, use_column_width='Auto')
-        st.metric(label='Valores totais (US$)', value=numerize(total))
+        st.metric(label='Valores totais (€)', value=numerize(total))
 
     with total2:
         image = Image.open('code/imagens/sem-dinheiro.png')
+        #image = Image.open('imagens/sem-dinheiro.png')
         # Exibindo a imagem
         totalPerdas = df.Amount[df['Class'] == 1].sum()
         st.image(image, use_column_width='Auto')
-        st.metric(label='Perdas com fraudes (US$)', value=numerize(totalPerdas))
+        st.metric(label='Perdas com fraudes (€)', value=numerize(totalPerdas))
 
     with total3:
         image = Image.open('code/imagens/sem-dinheiro.png')
+        #image = Image.open('imagens/sem-dinheiro.png')
         # Exibindo a imagem
-        total = 500
+
+        media = df.Amount[df['Class'] == 1].mean()
+        
         st.image(image, use_column_width='Auto')
-        st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
+        st.metric(label='Media dos valores fraudulentas (€)', value=numerize(media))
 
     with total4:
         image = Image.open('code/imagens/sem-dinheiro.png')
+        #image = Image.open('imagens/dinheiro-repetido.png')
         # Exibindo a imagem
-        total = 500
-        st.image(image, use_column_width='Auto')
-        st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
-
-    with total5:
-        image = Image.open('code/imagens/sem-dinheiro.png')
-        # Exibindo a imagem
-        total = 500
-        st.image(image, use_column_width='Auto')
-        st.metric(label='Perdas com fraudes (R$)', value=numerize(total))
+        moda = df.Amount[df['Class'] == 1].mode().values[0]
         
+        st.image(image, use_column_width='Auto')
+        st.metric(label='Valor mais comum em transações fraudulentas (€)', value=numerize(moda))
+
+    # with total5:
+    #     # image = Image.open('code/imagens/sem-dinheiro.png')
+    #     image = Image.open('imagens/sem-dinheiro.png')
+    #     # Exibindo a imagem
+    #     total = 500
+    #     st.image(image, use_column_width='Auto')
+    #     st.metric(label='Perdas com fraudes (€)', value=numerize(total))
+
     Q1, Q2 = st.columns(2)
 
 # Distribuição das transações
     with Q1:
         st.header(':blue[Distribuição das transações]')
-
+        st.write('###### As transações normais têm seus valores mais comuns entre \$1,00 e \$15,00 apenas.')
+       
         class_counts = df['Class'].value_counts()
         class_counts.rename({'count': 'Quantidade'}, inplace=True)
 
@@ -353,8 +366,8 @@ if (selected2 == "Gráficos"):
     with st.container():
 
         st.header(':blue[Transações por tempo]')
-        st.write('###### No gráfico de transações normais podemos observar que grande parte das transações normais ocorrem no tempo entre 40000s e 80000s e entre 120000s e 160000s.\
-            \n ###### Já no gráfico de trasações fraudulentas, podemos observar que as transações fraudulentas possuim uma grande quantidade de transações fraudulentas, que são realizadas no tempo de 40000s e 90000s.')    
+        st.write('###### No gráfico de transações normais podemos observar que grande parte ocorre no tempo entre 40000s e 80000s e entre 120000s e 160000s.\
+            \n ###### Já no gráfico de trasações fraudulentas, as mesmas possuem uma grande quantidade de transações realizadas no tempo de 40000s e 90000s.')    
         fig, ax = plt.subplots(nrows=2, ncols = 1, figsize=(17, 8))
 
         ax[0].hist(df.Time[df.Class == 0], bins = 30, color = '#0088B7', rwidth= 0.9)
@@ -402,7 +415,6 @@ if (selected2 == "Gráficos"):
             go.Histogram(x=df.Time[df.Class == 1]),
             row=2, col=1
         )
-
         st.plotly_chart(fig, use_container_width=True)
         
 # Transações por valor
@@ -473,7 +485,7 @@ if (selected2 == "Gráficos"):
 # possivel modelo XGboost
     with Q3:
         st.header('Matriz de confusão do XGBoost')
-        st.write('##### texto')
+        st.write('##### Melhor resultado obtido pelos modelos treinados')
         
         df = df.drop_duplicates()
         X = df.drop('Class', axis = 1)
@@ -537,10 +549,17 @@ if (selected2 == "Gráficos"):
         
         falsos_positivos = df_resultados[(df_resultados['Previsao'] == 1) & (df_resultados['Rotulo_verdadeiro'] == 0)]
         
-        st.dataframe(falsos_positivos) 
+        st.dataframe(falsos_positivos)
         
-                    
+    with Q4:
+        st.header('Identificação das colunas mais influêntes')
         
+        xgb.plot_importance(modelXGB, grid=False, ylabel='Colunas',
+            max_num_features=15,
+            title='15 colunas mais importantes para classificação')
+        # plt.show()
+        st.pyplot(plt, use_container_width=False)
+            
 # pagina sobre
 if (selected2 == "Sobre"):    
     st.header(":blue[Sobre]")
@@ -555,7 +574,8 @@ if (selected2 == "Sobre"):
     
     with perfil1:
                   
-        st.image("code/imagens/rodrigo1.png", width=200)
+        # st.image("code/imagens/rodrigo1.png", width=200)
+        st.image("imagens/rodrigo1.png", width=200)
         st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br', use_column_width=True)
         
         url = "https://github.com/wrodrigohs"
@@ -563,14 +583,22 @@ if (selected2 == "Sobre"):
     
         # link1, link2 = st.columns([1, 2])
         # with link1:
-        if st.button(":violet[GitHub]",url):
-            webbrowser.open_new_tab(url) 
-        # with link2:           
-        if st.button( ":blue[Linkedin]",url2):
-            webbrowser.open_new_tab(url2)
+        # if st.button(":violet[GitHub]",url):
+        #     webbrowser.open_new_tab(url) 
+        # # with link2:           
+        # if st.button( ":blue[Linkedin]",url2):
+        #     webbrowser.open_new_tab(url2)
+
+        # st.markdown(f'<a href="{url}" target="_blank">:violet[GitHub]</a>', unsafe_allow_html=True)
+        # st.markdown(f'<a href="{url2}" target="_blank">:blue[LinkedIn]</a>', unsafe_allow_html=True)
+
+        st.write(f'<a href="{url}" target="_blank" style="text-decoration: none;"><button style="background-color: #000000; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">GitHub</button></a>', unsafe_allow_html=True)
+
+        st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
 
     with perfil2:
-        st.image("code/imagens/vitor2.png", width=200)
+        # st.image("code/imagens/vitor2.png", width=200)
+        st.image("imagens/vitor2.png", width=200)
         st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n  ', use_column_width=True )
         
         #links para GitHub e linkedin
@@ -579,14 +607,19 @@ if (selected2 == "Sobre"):
 
         # link1, link2 = st.columns([1, 3])
         # with link1:
-        if st.button(":violet[GitHub]",url):
-            webbrowser.open_new_tab(url) 
+        # if st.button(":violet[GitHub]",url):
+        #     webbrowser.open_new_tab(url) 
         # with link2:           
-        if st.button( ":blue[Linkedin]",url2):
-            webbrowser.open_new_tab(url2)
+        # if st.button( ":blue[Linkedin]",url2):
+        #     webbrowser.open_new_tab(url2)
+
+        st.write(f'<a href="{url}" target="_blank" style="text-decoration: none;"><button style="background-color: #000000; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">GitHub</button></a>', unsafe_allow_html=True)
+
+        st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     with perfil3:
-        st.image("code/imagens/icaro3.png", width=200)
+        # st.image("code/imagens/icaro3.png", width=200)
+        st.image("imagens/icaro3.png", width=200)
         st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n', use_column_width=True)
         
         url = "https://github.com/icarogga"
@@ -594,14 +627,19 @@ if (selected2 == "Sobre"):
         
         # link1, link2 = st.columns([1, 3])
         # with link1:
-        if st.button(":violet[GitHub]",url):
-            webbrowser.open_new_tab(url) 
+        # if st.button(":violet[GitHub]",url):
+        #     webbrowser.open_new_tab(url) 
         # with link2:           
-        if st.button( ":blue[Linkedin]",url2):
-            webbrowser.open_new_tab(url2)
+        # if st.button( ":blue[Linkedin]",url2):
+        #     webbrowser.open_new_tab(url2)
+
+        st.write(f'<a href="{url}" target="_blank" style="text-decoration: none;"><button style="background-color: #000000; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">GitHub</button></a>', unsafe_allow_html=True)
+
+        st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     with perfil4:
-        st.image("code/imagens/marcelo4.png", width=200)
+        # st.image("code/imagens/marcelo4.png", width=200)
+        st.image("imagens/marcelo4.png", width=200)
         st.write('#### **_Marcelo Ferreira Borba_** \nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n', use_column_width=True)
         
         url = "https://github.com/MarceloFBorba"
@@ -609,23 +647,30 @@ if (selected2 == "Sobre"):
         
         # link1, link2 = st.columns([1, 3])
         # with link1:
-        if st.button(":violet[GitHub]",url):
-            webbrowser.open_new_tab(url) 
+        # if st.button(":violet[GitHub]",url):
+        #     webbrowser.open_new_tab(url) 
         # with link2:           
-        if st.button( ":blue[Linkedin]",url2):
-            webbrowser.open_new_tab(url2)
+        # if st.button( ":blue[Linkedin]",url2):
+        #     webbrowser.open_new_tab(url2)
+
+        st.write(f'<a href="{url}" target="_blank" style="text-decoration: none;"><button style="background-color: #000000; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">GitHub</button></a>', unsafe_allow_html=True)
+
+        st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     st.write(" #### Mentor do Projeto:")
     
     perfil5= st.container()
     
     with perfil5:
-        st.image("code/imagens/titos5.png", width=200)
+        #st.image("code/imagens/titos5.png", width=200)
+        st.image("imagens/titos5.png", width=200)
         st.write(" #### **_Bruno Laureano Titos Moreno_** \n\n Coordernador de Tecnologia na B3\n\n Email: bruno.moreno@b3.com.br")
 
         url = "https://www.linkedin.com/in/bruno-titos-8b537abb/"
         
-        if st.button( ":blue[Linkedin]",url):
-            webbrowser.open_new_tab(url) 
+        # if st.button( ":blue[Linkedin]",url):
+        #     webbrowser.open_new_tab(url) 
+
+        st.write(f'<a href="{url}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
 
 
