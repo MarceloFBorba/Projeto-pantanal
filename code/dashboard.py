@@ -26,7 +26,7 @@ import xgboost as xgb
 
 
 st.set_page_config(page_title='Pantanal.dev',
-                   page_icon='logo-pantanal.png',
+                   page_icon='code/imagens/logo-pantanal.png',
                    layout='wide',
                    initial_sidebar_state='auto'
                    )
