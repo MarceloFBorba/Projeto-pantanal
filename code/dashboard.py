@@ -486,7 +486,7 @@ if (selected2 == "Gráficos"):
         rus = RandomUnderSampler()
         X_under, y_under = rus.fit_resample(X_over, y_over)
         
-        X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True)
+        X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True, random_state=42)
         scaler = StandardScaler()
 
         X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
