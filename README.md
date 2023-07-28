@@ -1,8 +1,8 @@
 <h1 align="center">
-  <img src="code/imagens/logo.png" width=256 alt="GIMP">
+  <img src="code/imagens/LogoFraudWatchdog.png" width=256 alt="GIMP">
   <br />
   <br />
-  Pantanal.dev | <a href="https://project-creditcard-fraud-detection.streamlit.app">Acessar</a>
+  Fraud Watchdog | <a href="https://project-creditcard-fraud-detection.streamlit.app">Acessar</a>
 </h1>
 
 <p align="center"><i>"Proteção avançada contra fraudes em cartões de crédito para instituições financeiras."</i></p>
@@ -48,6 +48,13 @@
 
 -   **[Python](https://www.python.org)**
 -   **[Streamlit](https://streamlit.io)**
+-   **[XGBoost](https://xgboost.readthedocs.io/en/stable/)**
+-   **[Matplotlib](https://matplotlib.org)**
+-   **[Seaborn](https://seaborn.pydata.org)**
+-   **[Pandas](https://pandas.pydata.org)**
+-   **[NumPy](https://numpy.org)**
+-   **[Scikit Learn](https://scikit-learn.org/stable/)**
+-   **[Plotly](https://plotly.com)**
 
    </p>
 
