@@ -540,7 +540,7 @@ if (selected2 == "Gráficos"):
         # plt.show()
         #st.plotly_chart(plt, use_container_width=True)
  
-        st.pyplot(plt, use_container_width=False)
+        st.pyplot(plt, use_container_width=True)
         
         df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
              'Previsao': y_pred_xgb,
