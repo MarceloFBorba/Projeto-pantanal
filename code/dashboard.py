@@ -34,7 +34,13 @@ st.set_page_config(page_title='Pantanal.dev',
 # pip install streamlit-option-menu
 
 with st.sidebar:
-    st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
+    # st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
+    st.markdown(
+        '<div style="display: flex; justify-content: center; margin-top: 30px; margin-bottom: 30px;">'
+        '<img src="code/imagens/LogoFraudWatchdog.png" width="150">'
+        '</div>',
+        unsafe_allow_html=True
+    )
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
     menu_icon="menu-app", default_index=0,
