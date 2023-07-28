@@ -34,7 +34,7 @@ def get_base64_of_image(image_path):
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
 # Caminho relativo ao diretório do script principal
-image_path = "imagens/LogoFraudWatchdog.png"
+image_path = "code/imagens/LogoFraudWatchdog.png"
 
 # Converter o ícone em base64
 image_base64 = get_base64_of_image(image_path)
