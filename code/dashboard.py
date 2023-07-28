@@ -62,27 +62,11 @@ if (selected2 != "Gráficos"):
 # pagina Home
 if (selected2 == "Home"):
     with st.empty():
-        st.header(':blue[introdução]')
+        st.header(':blue[Introdução]')
     with st.empty():
         st.write('###### Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
             \n\n ###### Entre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.\
             \n\n ###### Portanto o desenvolvimento de algoritmos e modelos eficazes de detecção de fraudes é essencial. O conjunto de dados utilizado para o desenvolvimento de um modelo para esse propósito é o de transações de cartões de crédito datada de setembro de 2013, realizado por titulares de cartões europeus. Este conjunto de dados contém 284.807 transações, das quais 492 foram rotuladas como fraudes. A classe de fraudes representa apenas 0,172% de todas as transações, tornando o conjunto de dados altamente desequilibrado, sendo necessário sua manipulação.')
-    # header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
-    # with header_left:
-    #     image = Image.open('logo-pantanal.png')
-    #     # Exibindo a imagem
-    #     st.image(image, width=260)
-    # with header_mid:
-    #     st.title('Detecção de fraudes em cartões de crédito')
-
-    # with header_right:
-    #     image = Image.open('ufms_logo_negativo_rgb.png')
-    #     st.image(image, width=130)
-    # with st.empty():
-    #     st.title('')
-    # with st.empty():
-    #     st.write('Anualmente, as perdas globais totais devidas a fraudes financeiras têm estado na faixa de bilhões de dólares, com algumas estimativas sugerindo um custo anual para os Estados Unidos acima de 400 bilhões de dólares, segundo Waleed Hilal, S. Andrew Gadsden e John Yawney, no artigo entitulado “Financial Fraud: A Review of Anomaly Detection Techniques and Recent Advances”.\
-    #          \n\nEntre essas fraudes, aquelas envolvendo cartões de crédito são de grande relevância, uma vez que a sua não-detecção acarreta em prejuízos consideráveis, tanto para o consumidor quanto para a instituição financeira. Por todos esses motivos, o investimento na área de detecção de fraudes por meio de Inteligência Artificial vem crescendo a cada ano.')    
 
 # pagina Dados usados
 if (selected2 == "Dados Usados"):
@@ -154,14 +138,6 @@ if (selected2 == "Gráficos"):
         
         st.image(image, use_column_width='Auto')
         st.metric(label='##### Moda do valor em fraudes (€)', value=numerize(moda))
-
-    # with total5:
-    #     # image = Image.open('code/imagens/sem-dinheiro.png')
-    #     image = Image.open('imagens/sem-dinheiro.png')
-    #     # Exibindo a imagem
-    #     total = 500
-    #     st.image(image, use_column_width='Auto')
-    #     st.metric(label='Perdas com fraudes (€)', value=numerize(total))
 
     Q1, Q2 = st.columns(2)
 
@@ -495,7 +471,7 @@ if (selected2 == "Gráficos"):
         
         X_over,y_over = borderLineSMOTE.fit_resample(X, y)
         
-        rus = RandomUnderSampler()
+        rus = RandomUnderSampler(random_state=42)
         X_under, y_under = rus.fit_resample(X_over, y_over)
         
         X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True, random_state=42)
@@ -519,7 +495,8 @@ if (selected2 == "Gráficos"):
                                 colsample_bytree = 1,
                                 reg_alpha        = 0,
                                 reg_lambda       = 0,
-                                scale_pos_weight = 1,)
+                                scale_pos_weight = 1,
+                                random_state     = 42,)
         
         modelXGB.fit(X_train, y_train)
         y_pred_xgb = modelXGB.predict(X_test)
