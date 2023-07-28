@@ -7,7 +7,6 @@ import sklearn.metrics as metrics
 from sklearn.metrics import confusion_matrix
 
 import streamlit as st
-# from streamlit_folium import st_folium
 import streamlit.components.v1 as components
 
 import plotly.express as px
@@ -21,15 +20,13 @@ from streamlit_option_menu import option_menu
 
 from PIL import Image
 
-import webbrowser
 import xgboost as xgb
-import base64
 
 # Configuração para evitar que o Streamlit modifique o caminho do ícone
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
 st.set_page_config(page_title='Pantanal.dev', 
-                   page_icon='imagens/LogoFraudWatchdog.png',
+                   page_icon='code/imagens/LogoFraudWatchdog.png',
                    layout='wide',
                    initial_sidebar_state='auto'
                    )
@@ -37,7 +34,7 @@ st.set_page_config(page_title='Pantanal.dev',
 # pip install streamlit-option-menu
 
 with st.sidebar:
-    image = Image.open("code/imagens/LogoFraudWatchdog.png")
+    st.sidebar.image('code/imagens/LogoFraudWatchdog.png', use_column_width=True)
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
     menu_icon="menu-app", default_index=0,
