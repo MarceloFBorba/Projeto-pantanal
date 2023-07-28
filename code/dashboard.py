@@ -23,10 +23,27 @@ from PIL import Image
 
 import webbrowser
 import xgboost as xgb
+import base64
 
+# Função para converter a imagem em base64
+def get_base64_of_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
 
-st.set_page_config(page_title='Pantanal.dev',
-                   page_icon='code/imagens/logo-pantanal.png',
+# Configuração para evitar que o Streamlit modifique o caminho do ícone
+st.set_option('deprecation.showfileUploaderEncoding', False)
+
+# Caminho relativo ao diretório do script principal
+image_path = "imagens/LogoFraudWatchdog.png"
+
+# Converter o ícone em base64
+image_base64 = get_base64_of_image(image_path)
+
+# Configuração para evitar que o Streamlit modifique o caminho do ícone
+st.set_option('deprecation.showfileUploaderEncoding', False)
+
+st.set_page_config(page_title='Pantanal.dev', 
+                   page_icon=f"data:image/png;base64,{image_base64}",
                    layout='wide',
                    initial_sidebar_state='auto'
                    )
@@ -42,12 +59,16 @@ with st.sidebar:
     }
     )
 
+# image_path = "imagens/logo-pantanal.png"
+
+# image_base64 = get_base64_of_image(image_path)
+
 # Header da página
 if (selected2 != "Gráficos"):
     header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     with header_left:
         image = Image.open("code/imagens/logo-pantanal.png")
-        #image = Image.open("imagens/logo-pantanal.png")
+        # image = Image.open("/Projeto-pantanal/imagens/logo-pantanal.png")
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
