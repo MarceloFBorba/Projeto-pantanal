@@ -25,25 +25,11 @@ import webbrowser
 import xgboost as xgb
 import base64
 
-# Função para converter a imagem em base64
-def get_base64_of_image(image_path):
-    with open(image_path, "rb") as img_file:
-        return base64.b64encode(img_file.read()).decode()
-
-# Configuração para evitar que o Streamlit modifique o caminho do ícone
-st.set_option('deprecation.showfileUploaderEncoding', False)
-
-# Caminho relativo ao diretório do script principal
-image_path = "code/imagens/LogoFraudWatchdog.png"
-
-# Converter o ícone em base64
-image_base64 = get_base64_of_image(image_path)
-
 # Configuração para evitar que o Streamlit modifique o caminho do ícone
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
 st.set_page_config(page_title='Pantanal.dev', 
-                   page_icon=f"data:image/png;base64,{image_base64}",
+                   page_icon='imagens/LogoFraudWatchdog.png',
                    layout='wide',
                    initial_sidebar_state='auto'
                    )
@@ -51,6 +37,7 @@ st.set_page_config(page_title='Pantanal.dev',
 # pip install streamlit-option-menu
 
 with st.sidebar:
+    image = Image.open("code/imagens/LogoFraudWatchdog.png")
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
     menu_icon="menu-app", default_index=0,
