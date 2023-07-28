@@ -8,39 +8,32 @@ from sklearn.metrics import confusion_matrix
 
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit_option_menu import option_menu
 
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.graph_objs import Layout
 from plotly.subplots import make_subplots
 
-
 from numerize.numerize import numerize
-from streamlit_option_menu import option_menu
 
 from PIL import Image
 
 import xgboost as xgb
 
-# Configuração para evitar que o Streamlit modifique o caminho do ícone
-st.set_option('deprecation.showfileUploaderEncoding', False)
 
 st.set_page_config(page_title='Pantanal.dev', 
                    page_icon='code/imagens/LogoFraudWatchdog.png',
                    layout='wide',
                    initial_sidebar_state='auto'
                    )
+
+
 # Instalar sidebar   
 # pip install streamlit-option-menu
 
 with st.sidebar:
-    # st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
-    st.markdown(
-        '<div style="display: flex; justify-content: center; margin-top: 30px; margin-bottom: 30px;">'
-        '<img src="code/imagens/LogoFraudWatchdog.png" width="150">'
-        '</div>',
-        unsafe_allow_html=True
-    )
+    st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
     menu_icon="menu-app", default_index=0,
@@ -49,9 +42,6 @@ with st.sidebar:
     }
     )
 
-# image_path = "imagens/logo-pantanal.png"
-
-# image_base64 = get_base64_of_image(image_path)
 
 # Header da página
 if (selected2 != "Gráficos"):
