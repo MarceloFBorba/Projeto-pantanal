@@ -519,9 +519,13 @@ if (selected2 == "Gráficos"):
  
         st.pyplot(plt, use_container_width=True)
         
+        # df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
+        #      'Previsao': y_pred_xgb,
+        #      'Rotulo_verdadeiro':y_test})
         df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
-             'Previsao': y_pred_xgb,
-             'Rotulo_verdadeiro':y_test})
+                'Previsao': y_pred_xgb,
+                'Rotulo_verdadeiro':y_test,
+                'Amount':y_test['Amount']})
         
         
         falsos_positivos = df_resultados[(df_resultados['Previsao'] == 1) & (df_resultados['Rotulo_verdadeiro'] == 0)]
