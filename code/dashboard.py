@@ -5,6 +5,11 @@ import seaborn as sns
 
 import sklearn.metrics as metrics
 from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+from imblearn.under_sampling import RandomUnderSampler
+from imblearn.over_sampling  import BorderlineSMOTE
 
 import streamlit as st
 import streamlit.components.v1 as components
@@ -19,6 +24,8 @@ from numerize.numerize import numerize
 
 from PIL import Image
 
+import pickle
+
 import xgboost as xgb
 
 
@@ -28,9 +35,48 @@ st.set_page_config(page_title='Pantanal.dev',
                    initial_sidebar_state='auto'
                    )
 
+file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
 
-# Instalar sidebar   
-# pip install streamlit-option-menu
+df = pd.read_csv(file_path)
+
+model_path = 'xgboost_model.pkl'
+
+with open(model_path, 'rb') as arquivo_pkl:
+    modelo_carregado = pickle.load(arquivo_pkl)
+
+X = df.drop('Class', axis = 1)
+y = df['Class']
+
+borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
+X_over,y_over = borderLineSMOTE.fit_resample(X, y)
+
+rus = RandomUnderSampler(random_state=42)
+X_under, y_under = rus.fit_resample(X_over, y_over)
+
+X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True, random_state=42)
+
+scaler = StandardScaler()
+
+X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
+X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
+
+amount = X_test["Amount"]
+
+X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
+X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
+
+y_pred_xgb = modelo_carregado.predict(X_test)
+
+X_test['Amount'] = amount
+df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
+        'Previsao': y_pred_xgb,
+        'Rotulo_verdadeiro':y_test,
+        'Amount':X_test['Amount']})
+
+falsos_positivos = df_resultados[(df_resultados['Previsao'] == 1) & (df_resultados['Rotulo_verdadeiro'] == 0)]
+falsos_negativos = df_resultados[(df_resultados['Previsao'] == 0) & (df_resultados['Rotulo_verdadeiro'] == 1)]
+
+valor_falso_positivo = falsos_positivos['Amount'].sum()
 
 with st.sidebar:
     st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
@@ -42,13 +88,12 @@ with st.sidebar:
     }
     )
 
-
 # Header da página
 if (selected2 != "Gráficos"):
     header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     with header_left:
         image = Image.open("code/imagens/logo-pantanal.png")
-        # image = Image.open("/Projeto-pantanal/imagens/logo-pantanal.png")
+        # image = Image.open("/Projeto-pantanal/code/imagens/logo-pantanal.png")
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
@@ -56,7 +101,7 @@ if (selected2 != "Gráficos"):
 
     with header_right:
         image = Image.open("code/imagens/ufms_logo_negativo_rgb.png")
-        #image = Image.open("imagens/ufms_logo_negativo_rgb.png")
+        #image = Image.open("code/imagens/ufms_logo_negativo_rgb.png")
         st.image(image, width=130)
 
 # pagina Home
@@ -96,10 +141,6 @@ if (selected2 == "Dados Usados"):
   
 # pagina Graficos
 if (selected2 == "Gráficos"):
-    file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
-    #file_path = "creditcard.csv"
-    df = pd.read_csv(file_path)
-    
     st.title(':blue[Gráficos]')
     
     # total1, total2, total3, total4, total5 = st.columns(5, gap='large')
@@ -115,21 +156,23 @@ if (selected2 == "Gráficos"):
 
     with total2:
         image = Image.open('code/imagens/dinheiro-fraudado.png')
-        #image = Image.open('imagens/sem-dinheiro.png')
+        #image = Image.open('code/imagens/sem-dinheiro.png')
         # Exibindo a imagem
         totalPerdas = df.Amount[df['Class'] == 1].sum()
-        st.image(image, width= 125)
+        st.image(image, width=125)
         st.metric(label='##### Perdas com fraudes ($)', value=numerize(totalPerdas))
 
     with total3:
         image = Image.open('code/imagens/sem-dinheiro.png')
-        #image = Image.open('imagens/sem-dinheiro.png')
+        #image = Image.open('code/imagens/sem-dinheiro.png')
         # Exibindo a imagem
 
+        # Carregar o modelo salvo em formato .pkl
         media = df.Amount[df['Class'] == 1].mean()
+        # porcentagem = df.Amount[df['Class'] == 1].sum() / df.Amount.sum() * 100
         
         st.image(image, use_column_width='Auto')
-        st.metric(label='##### Media dos valores fraudulentas ($)', value=numerize(media))
+        st.metric(label='##### Média dos valores fraudados ($)', value=numerize(media))
 
     with total4:
         image = Image.open('code/imagens/dinheiro-repetido.png')
@@ -397,7 +440,7 @@ if (selected2 == "Gráficos"):
     with st.container():
         st.header(':blue[Transações por valor]')
         st.write('###### Nos gráficos de transações por valor podemos observar as transações normais são todos abaixo de $3000. \
-            \n ###### Já no gráfico de transações Fraudulentas podemos obsevar que grande parte das transações são de $0 até $750, tendo o seu grande volume em valores abaixo de $50.')  
+            \n ###### Já no gráfico de transações Fraudulentas podemos obsevar que grande parte das transações são de 0 até 750 dólares, tendo o seu grande volume em valores abaixo de $50.')  
         fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(17, 8))
 
         ax[0].hist(df.Amount[df.Class == 0], bins = 30, color = '#0088B7', rwidth= 0.9)
@@ -437,98 +480,84 @@ if (selected2 == "Gráficos"):
 #----------------------------------------------------------------------------
 # Modelo xgboost
 
-#     with st.container():
-#         st.header('Modelo')
-#         model_path = 'xgboost_model.pkl'
-#         # Carregar o modelo salvo em formato .pkl
-#         with open(model_path, 'rb') as arquivo_pkl:
-#             modelo_carregado = pickle.load(arquivo_pkl)
+    with st.container():
+        st.header('Modelo')
 
 # modelo XGBoost funcionando
 
-    from imblearn.under_sampling import RandomUnderSampler
-    from sklearn.model_selection import train_test_split
-    import xgboost as xgb
-    from imblearn.over_sampling  import BorderlineSMOTE
+    #from imblearn.under_sampling import RandomUnderSampler
+    #from sklearn.model_selection import train_test_split
+    #import xgboost as xgb
+    #from imblearn.over_sampling  import BorderlineSMOTE
 
-    from sklearn.model_selection import train_test_split
-    from sklearn.preprocessing   import StandardScaler
-
-
+    #from sklearn.model_selection import train_test_split
+    #from sklearn.preprocessing   import StandardScaler
 
     Q3, Q4 = st.columns(2)
 
 # possivel modelo XGboost
     with Q3:
-        st.header('Matriz de confusão do XGBoost')
-        st.write('##### Melhor resultado obtido pelos modelos treinados')
+        # st.header('Matriz de confusão do XGBoost')
+        # st.write('###### Melhor resultado obtido pelos modelos treinados')
         
-        df = df.drop_duplicates()
-        X = df.drop('Class', axis = 1)
-        y = df['Class']
+        #df = df.drop_duplicates()
         
-        borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
+        #borderLineSMOTE = BorderlineSMOTE(sampling_strategy= 0.1, random_state=42)
         
-        X_over,y_over = borderLineSMOTE.fit_resample(X, y)
+        #X_over,y_over = borderLineSMOTE.fit_resample(X, y)
         
-        rus = RandomUnderSampler(random_state=42)
-        X_under, y_under = rus.fit_resample(X_over, y_over)
-        
-        X_train, X_test, y_train, y_test = train_test_split(X_under, y_under, test_size=0.2, shuffle=True, random_state=42)
-        scaler = StandardScaler()
+        #rus = RandomUnderSampler(random_state=42)
+        #X_under, y_under = rus.fit_resample(X_over, y_over)
+    
+    
+        #scaler = StandardScaler()
 
-        X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
-        X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
+        #X_train['std_amount'] = scaler.fit_transform(X_train['Amount'].values.reshape(-1, 1))
+        #X_train['std_time'] = scaler.fit_transform(X_train['Time'].values.reshape(-1, 1))
 
-        X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
-        X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
+        #X_test['std_amount'] = scaler.fit_transform(X_test['Amount'].values.reshape(-1, 1))
+        #X_test['std_time'] = scaler.fit_transform(X_test['Time'].values.reshape(-1, 1))
 
-        X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
-        X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
+        #X_train.drop(['Time', 'Amount'], axis=1, inplace=True)
+        #X_test.drop(['Time', 'Amount'], axis=1, inplace=True)
         
+        #plt.figure(figsize=(2, 2))
+
+        #modelXGB = xgb.XGBClassifier(n_estimators     = 100,
+        #                        max_depth        = 4,
+        #                        learning_rate    = 0.3,
+        #                        subsample        = 1,
+        #                        colsample_bytree = 1,
+        #                        reg_alpha        = 0,
+        #                        reg_lambda       = 0,
+        #                        scale_pos_weight = 1,
+        #                        random_state     = 42,)
+        
+        #modelXGB.fit(X_train, y_train)
+
         plt.figure(figsize=(2, 2))
-
-        modelXGB = xgb.XGBClassifier(n_estimators     = 100,
-                                max_depth        = 4,
-                                learning_rate    = 0.3,
-                                subsample        = 1,
-                                colsample_bytree = 1,
-                                reg_alpha        = 0,
-                                reg_lambda       = 0,
-                                scale_pos_weight = 1,
-                                random_state     = 42,)
         
-        modelXGB.fit(X_train, y_train)
-        y_pred_xgb = modelXGB.predict(X_test)
         matriz = confusion_matrix(y_test, y_pred_xgb)
         sns.heatmap(matriz, square=True, annot=True, cbar=False, cmap= 'Blues', fmt='.0f')
-
-
-        plt.title('Matriz de confusão do XGBoost',
-                fontsize = 6,
+        
+        plt.title('Matriz de confusão do XGB',
+                fontsize = 8,
                 color = '#000000',
-                pad= 5,
-                fontweight= 'bold')
-
+                pad= 3)
+    
         plt.xlabel('Previsão',fontsize = 4, color= '#000000')
         plt.ylabel('Valor real'  ,fontsize = 4, color= '#000000')
-
-
         # plt.show()
         #st.plotly_chart(plt, use_container_width=True)
- 
+
         st.pyplot(plt, use_container_width=True)
         
         # df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
-        #      'Previsao': y_pred_xgb,
-        #      'Rotulo_verdadeiro':y_test})
-        df_resultados = pd.DataFrame({'Transacao': range(len(y_test)),
-                'Previsao': y_pred_xgb,
-                'Rotulo_verdadeiro':y_test,
-                'Amount':y_test['Amount']})
+        #         'Previsao': y_pred_xgb,
+        #         'Rotulo_verdadeiro':y_test,
+        #         'Amount':X_test['Amount']})
         
-        
-        falsos_positivos = df_resultados[(df_resultados['Previsao'] == 1) & (df_resultados['Rotulo_verdadeiro'] == 0)]
+        # falsos_positivos = df_resultados[(df_resultados['Previsao'] == 1) & (df_resultados['Rotulo_verdadeiro'] == 0)]
         
         st.dataframe(falsos_positivos)
         
@@ -536,7 +565,7 @@ if (selected2 == "Gráficos"):
         st.header('Identificação das colunas mais influêntes')
         st.write('###### Neste gráfico podemos observar as colunas com maior influencia para a classificação.')
         
-        xgb.plot_importance(modelXGB, grid=False, ylabel='Colunas',
+        xgb.plot_importance(modelo_carregado, grid=False, ylabel='Colunas',
             max_num_features=15,
             title='15 colunas mais importantes para classificação')
         # plt.show()
@@ -557,7 +586,7 @@ if (selected2 == "Sobre"):
     with perfil1:
                   
         st.image("code/imagens/rodrigo1.png", width=200)
-        #st.image("imagens/rodrigo1.png", width=200)
+        #st.image("code/imagens/rodrigo1.png", width=200)
         st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br', use_column_width=True)
         
         url = "https://github.com/wrodrigohs"
@@ -582,7 +611,7 @@ if (selected2 == "Sobre"):
 
     with perfil2:
         st.image("code/imagens/vitor2.png", width=200)
-        #st.image("imagens/vitor2.png", width=200)
+        #st.image("code/imagens/vitor2.png", width=200)
         st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n  ', use_column_width=True )
         
         #links para GitHub e linkedin
@@ -603,7 +632,7 @@ if (selected2 == "Sobre"):
         
     with perfil3:
         st.image("code/imagens/icaro3.png", width=200)
-        #st.image("imagens/icaro3.png", width=200)
+        #st.image("code/imagens/icaro3.png", width=200)
         st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n', use_column_width=True)
         
         url = "https://github.com/icarogga"
@@ -623,7 +652,7 @@ if (selected2 == "Sobre"):
         
     with perfil4:
         st.image("code/imagens/marcelo4.png", width=200)
-        #st.image("imagens/marcelo4.png", width=200)
+        #st.image("code/imagens/marcelo4.png", width=200)
         st.write('#### **_Marcelo Ferreira Borba_** \nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n', use_column_width=True)
         
         url = "https://github.com/MarceloFBorba"
@@ -648,7 +677,7 @@ if (selected2 == "Sobre"):
     
     with perfil5:
         st.image("code/imagens/titos5.png", width=200)
-        #st.image("imagens/titos5.png", width=200)
+        #st.image("code/imagens/titos5.png", width=200)
         st.write(" #### **_Bruno Laureano Titos Moreno_** \n\n Coordernador de Tecnologia na B3\n\n Email: bruno.moreno@b3.com.br")
 
         url = "https://www.linkedin.com/in/bruno-titos-8b537abb/"
