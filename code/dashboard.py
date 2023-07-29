@@ -111,7 +111,7 @@ if (selected2 == "Gráficos"):
         # Exibindo a imagem
         total = df['Amount'].sum()
         st.image(image, use_column_width='Auto')
-        st.metric(label='##### Valores totais (€)', value=numerize(total))
+        st.metric(label='##### Valores totais ($)', value=numerize(total))
 
     with total2:
         image = Image.open('code/imagens/dinheiro-fraudado.png')
@@ -119,7 +119,7 @@ if (selected2 == "Gráficos"):
         # Exibindo a imagem
         totalPerdas = df.Amount[df['Class'] == 1].sum()
         st.image(image, width= 125)
-        st.metric(label='##### Perdas com fraudes (€)', value=numerize(totalPerdas))
+        st.metric(label='##### Perdas com fraudes ($)', value=numerize(totalPerdas))
 
     with total3:
         image = Image.open('code/imagens/sem-dinheiro.png')
@@ -129,7 +129,7 @@ if (selected2 == "Gráficos"):
         media = df.Amount[df['Class'] == 1].mean()
         
         st.image(image, use_column_width='Auto')
-        st.metric(label='##### Media dos valores fraudulentas (€)', value=numerize(media))
+        st.metric(label='##### Media dos valores fraudulentas ($)', value=numerize(media))
 
     with total4:
         image = Image.open('code/imagens/dinheiro-repetido.png')
@@ -137,7 +137,7 @@ if (selected2 == "Gráficos"):
         moda = df.Amount[df['Class'] == 1].mode().values[0]
         
         st.image(image, use_column_width='Auto')
-        st.metric(label='##### Moda do valor em fraudes (€)', value=numerize(moda))
+        st.metric(label='##### Moda do valor em fraudes ($)', value=numerize(moda))
 
     Q1, Q2 = st.columns(2)
 
