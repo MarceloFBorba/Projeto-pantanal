@@ -118,7 +118,7 @@ if (selected2 == "Gráficos"):
         #image = Image.open('imagens/sem-dinheiro.png')
         # Exibindo a imagem
         totalPerdas = df.Amount[df['Class'] == 1].sum()
-        st.image(image, use_column_width='Auto')
+        st.image(image, width= 283px )
         st.metric(label='##### Perdas com fraudes (€)', value=numerize(totalPerdas))
 
     with total3:
