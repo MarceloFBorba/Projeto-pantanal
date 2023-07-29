@@ -30,12 +30,12 @@ import xgboost as xgb
 
 
 st.set_page_config(page_title='Pantanal.dev', 
-                   page_icon='code/imagens/LogoFraudWatchdog.png',
+                   page_icon='imagens/LogoFraudWatchdog.png',
                    layout='wide',
                    initial_sidebar_state='auto'
                    )
 
-file_path = 'https://github.com/MarceloFBorba/Projeto-pantanal/releases/download/dataframe/creditcard.csv'
+file_path = 'https://www.dropbox.com/scl/fi/jwieku3ekjz5vea167n39/creditcard.csv?rlkey=xxvjpwk3aenw9fuq95jgbgcz4&dl=0'
 # file_path = 'creditcard.csv'
 
 df = pd.read_csv(file_path)
@@ -80,7 +80,7 @@ falsos_negativos = df_resultados[(df_resultados['Previsao'] == 1) & (df_resultad
 valor_falso_positivo = falsos_positivos['Amount'].sum()
 
 with st.sidebar:
-    st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
+    st.sidebar.image('imagens/LogoFraudWatchdog.png', width=150)
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
     menu_icon="menu-app", default_index=0,
@@ -93,16 +93,16 @@ with st.sidebar:
 if (selected2 != "Gráficos"):
     header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     with header_left:
-        image = Image.open("code/imagens/logo-pantanal.png")
-        # image = Image.open("/Projeto-pantanal/code/imagens/logo-pantanal.png")
+        image = Image.open("imagens/logo-pantanal.png")
+        # image = Image.open("/Projeto-pantanal/imagens/logo-pantanal.png")
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
         st.title('Detecção de fraudes em cartões de crédito')
 
     with header_right:
-        image = Image.open("code/imagens/ufms_logo_negativo_rgb.png")
-        #image = Image.open("code/imagens/ufms_logo_negativo_rgb.png")
+        image = Image.open("imagens/ufms_logo_negativo_rgb.png")
+        #image = Image.open("imagens/ufms_logo_negativo_rgb.png")
         st.image(image, width=130)
 
 # pagina Home
@@ -149,30 +149,30 @@ if (selected2 == "Gráficos"):
     total1, total2, total3, total4, total5 = st.columns(5, gap='large')
 # Resultados resumidos
     with total1:
-        image = Image.open('code/imagens/dinheiro-total-cortado.png')
+        image = Image.open('imagens/dinheiro-total-cortado.png')
         # Exibindo a imagem
         total = df['Amount'].sum()
         st.image(image, use_column_width='Auto')
         st.metric(label='##### Valores totais ($)', value=numerize(total))
 
     with total2:
-        image = Image.open('code/imagens/dinheiro-fraudado.png')
-        #image = Image.open('code/imagens/sem-dinheiro.png')
+        image = Image.open('imagens/dinheiro-fraudado.png')
+        #image = Image.open('imagens/sem-dinheiro.png')
         # Exibindo a imagem
         totalPerdas = df.Amount[df['Class'] == 1].sum()
         st.image(image, width=125)
         st.metric(label='##### Perdas com fraudes ($)', value=numerize(totalPerdas))
 
     with total3:
-        image = Image.open('code/imagens/roubo.png')
+        image = Image.open('imagens/roubo.png')
         # Exibindo a imagem
         
         st.image(image, use_column_width=125)
         st.metric(label='##### Com o modelo ($)', value=numerize(valor_falso_positivo))
 
     with total4:
-        image = Image.open('code/imagens/sem-dinheiro.png')
-        #image = Image.open('code/imagens/sem-dinheiro.png')
+        image = Image.open('imagens/sem-dinheiro.png')
+        #image = Image.open('imagens/sem-dinheiro.png')
         # Exibindo a imagem
 
         # Carregar o modelo salvo em formato .pkl
@@ -183,7 +183,7 @@ if (selected2 == "Gráficos"):
         st.metric(label='##### Média dos valores fraudados ($)', value=numerize(media))
         
     with total5:
-        image = Image.open('code/imagens/dinheiro-repetido.png')
+        image = Image.open('imagens/dinheiro-repetido.png')
         # Exibindo a imagem
         moda = df.Amount[df['Class'] == 1].mode().values[0]
         
@@ -619,8 +619,8 @@ if (selected2 == "Sobre"):
     
     with perfil1:
                   
-        st.image("code/imagens/rodrigo1.png", width=200)
-        #st.image("code/imagens/rodrigo1.png", width=200)
+        st.image("imagens/rodrigo1.png", width=200)
+        #st.image("imagens/rodrigo1.png", width=200)
         st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br', use_column_width=True)
         
         url = "https://github.com/wrodrigohs"
@@ -644,8 +644,8 @@ if (selected2 == "Sobre"):
 
 
     with perfil2:
-        st.image("code/imagens/vitor2.png", width=200)
-        #st.image("code/imagens/vitor2.png", width=200)
+        st.image("imagens/vitor2.png", width=200)
+        #st.image("imagens/vitor2.png", width=200)
         st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n  ', use_column_width=True )
         
         #links para GitHub e linkedin
@@ -665,8 +665,8 @@ if (selected2 == "Sobre"):
         st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     with perfil3:
-        st.image("code/imagens/icaro3.png", width=200)
-        #st.image("code/imagens/icaro3.png", width=200)
+        st.image("imagens/icaro3.png", width=200)
+        #st.image("imagens/icaro3.png", width=200)
         st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n', use_column_width=True)
         
         url = "https://github.com/icarogga"
@@ -685,8 +685,8 @@ if (selected2 == "Sobre"):
         st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     with perfil4:
-        st.image("code/imagens/marcelo4.png", width=200)
-        #st.image("code/imagens/marcelo4.png", width=200)
+        st.image("imagens/marcelo4.png", width=200)
+        #st.image("imagens/marcelo4.png", width=200)
         st.write('#### **_Marcelo Ferreira Borba_** \nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n', use_column_width=True)
         
         url = "https://github.com/MarceloFBorba"
@@ -710,8 +710,8 @@ if (selected2 == "Sobre"):
     perfil5= st.container()
     
     with perfil5:
-        st.image("code/imagens/titos5.png", width=200)
-        #st.image("code/imagens/titos5.png", width=200)
+        st.image("imagens/titos5.png", width=200)
+        #st.image("imagens/titos5.png", width=200)
         st.write(" #### **_Bruno Laureano Titos Moreno_** \n\n Coordernador de Tecnologia na B3\n\n Email: bruno.moreno@b3.com.br")
 
         url = "https://www.linkedin.com/in/bruno-titos-8b537abb/"

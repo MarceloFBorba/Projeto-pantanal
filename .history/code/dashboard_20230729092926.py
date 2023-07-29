@@ -35,8 +35,8 @@ st.set_page_config(page_title='Pantanal.dev',
                    initial_sidebar_state='auto'
                    )
 
-file_path = 'https://github.com/MarceloFBorba/Projeto-pantanal/releases/download/dataframe/creditcard.csv'
-# file_path = 'creditcard.csv'
+# file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
+file_path = 'https://www.dropbox.com/scl/fi/jwieku3ekjz5vea167n39/creditcard.csv?dl=0&rlkey=xxvjpwk3aenw9fuq95jgbgcz4'
 
 df = pd.read_csv(file_path)
 
@@ -441,7 +441,7 @@ if (selected2 == "Gráficos"):
         # Adicionar histograma para a classe 0 com cor personalizada (vermelho) e hovertext com a quantidade de transações
         fig.add_trace(
             go.Histogram(x=df[df.Class == 0].Time.div(3600), 
-                         nbinsx=48, hovertext='', name='Transações normais',
+                         nbinsx=48, 
                          hovertemplate=[f"{percent:.0f}" for percent in counts_class_0]),
             row=1, col=1
         )
@@ -449,19 +449,17 @@ if (selected2 == "Gráficos"):
         # Adicionar histograma para a classe 1 com cor personalizada (azul) e hovertext com a quantidade de transações
         fig.add_trace(
             go.Histogram(x=df[df.Class == 1].Time.div(3600), 
-                         nbinsx=48, hovertext='', name='Transações fraudulentas',
+                         nbinsx=48, 
                          hovertemplate=[f"{percent:.0f}" for percent in counts_class_1]),
             row=2, col=1
         )
 
         # Atualizar rótulos dos eixos
-        fig.update_xaxes(title_text="Tempo (horas)", row=1, col=1)
         fig.update_xaxes(title_text="Tempo (horas)", row=2, col=1)
         fig.update_yaxes(title_text="Frequência", row=1, col=1)
-        fig.update_yaxes(title_text="Frequência", row=2, col=1)
 
         # Definir os valores do eixo y para cada subplot
-        y_values_subplot1 = [0, 2500, 5000, 7500, 10000, ]  # Valores personalizados para o subplot 1
+        y_values_subplot1 = [0, 500, 1000, 1500, 2000, ]  # Valores personalizados para o subplot 1
         y_values_subplot2 = [0, 50, 100, 150]  # Valores personalizados para o subplot 2
         fig.update_yaxes(tickvals=y_values_subplot1, 
                          showgrid=False, row=1, col=1)
