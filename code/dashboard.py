@@ -39,7 +39,7 @@ file_path = 'https://www.dropbox.com/s/b44o3t3ehmnx2b7/creditcard.csv?dl=1'
 
 df = pd.read_csv(file_path)
 
-model_path = 'xgboost_model.pkl'
+model_path = 'code/xgboost_model.pkl'
 
 with open(model_path, 'rb') as arquivo_pkl:
     modelo_carregado = pickle.load(arquivo_pkl)
