@@ -30,7 +30,7 @@ import xgboost as xgb
 
 
 st.set_page_config(page_title='Pantanal.dev', 
-                   page_icon='code/imagens/LogoFraudWatchdog.png',
+                   page_icon='imagens/LogoFraudWatchdog.png',
                    layout='wide',
                    initial_sidebar_state='auto'
                    )
@@ -79,7 +79,7 @@ falsos_negativos = df_resultados[(df_resultados['Previsao'] == 1) & (df_resultad
 valor_falso_positivo = falsos_positivos['Amount'].sum()
 
 with st.sidebar:
-    st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
+    st.sidebar.image('imagens/LogoFraudWatchdog.png', width=150)
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
     menu_icon="menu-app", default_index=0,
@@ -92,16 +92,16 @@ with st.sidebar:
 if (selected2 != "Gráficos"):
     header_left, header_mid, header_right = st.columns([1, 2, 1], gap='large')
     with header_left:
-        image = Image.open("code/imagens/logo-pantanal.png")
-        # image = Image.open("/Projeto-pantanal/code/imagens/logo-pantanal.png")
+        image = Image.open("imagens/logo-pantanal.png")
+        # image = Image.open("/Projeto-pantanal/imagens/logo-pantanal.png")
         # Exibindo a imagem
         st.image(image, width=260)
     with header_mid:
         st.title('Detecção de fraudes em cartões de crédito')
 
     with header_right:
-        image = Image.open("code/imagens/ufms_logo_negativo_rgb.png")
-        #image = Image.open("code/imagens/ufms_logo_negativo_rgb.png")
+        image = Image.open("imagens/ufms_logo_negativo_rgb.png")
+        #image = Image.open("imagens/ufms_logo_negativo_rgb.png")
         st.image(image, width=130)
 
 # pagina Home
@@ -148,30 +148,30 @@ if (selected2 == "Gráficos"):
     total1, total2, total3, total4, total5 = st.columns(5, gap='large')
 # Resultados resumidos
     with total1:
-        image = Image.open('code/imagens/dinheiro-total-cortado.png')
+        image = Image.open('imagens/dinheiro-total-cortado.png')
         # Exibindo a imagem
         total = df['Amount'].sum()
         st.image(image, use_column_width='Auto')
         st.metric(label='##### Valores totais ($)', value=numerize(total))
 
     with total2:
-        image = Image.open('code/imagens/dinheiro-fraudado.png')
-        #image = Image.open('code/imagens/sem-dinheiro.png')
+        image = Image.open('imagens/dinheiro-fraudado.png')
+        #image = Image.open('imagens/sem-dinheiro.png')
         # Exibindo a imagem
         totalPerdas = df.Amount[df['Class'] == 1].sum()
         st.image(image, width=125)
         st.metric(label='##### Perdas com fraudes ($)', value=numerize(totalPerdas))
 
     with total3:
-        image = Image.open('code/imagens/roubo.png')
+        image = Image.open('imagens/roubo.png')
         # Exibindo a imagem
         
         st.image(image, use_column_width=125)
         st.metric(label='##### Com o modelo ($)', value=numerize(valor_falso_positivo))
 
     with total4:
-        image = Image.open('code/imagens/sem-dinheiro.png')
-        #image = Image.open('code/imagens/sem-dinheiro.png')
+        image = Image.open('imagens/sem-dinheiro.png')
+        #image = Image.open('imagens/sem-dinheiro.png')
         # Exibindo a imagem
 
         # Carregar o modelo salvo em formato .pkl
@@ -182,7 +182,7 @@ if (selected2 == "Gráficos"):
         st.metric(label='##### Média dos valores fraudados ($)', value=numerize(media))
         
     with total5:
-        image = Image.open('code/imagens/dinheiro-repetido.png')
+        image = Image.open('imagens/dinheiro-repetido.png')
         # Exibindo a imagem
         moda = df.Amount[df['Class'] == 1].mode().values[0]
         
@@ -431,7 +431,8 @@ if (selected2 == "Gráficos"):
         # st.pyplot(fig, use_container_width=True)
         
         # Criar subplots com compartilhamento de eixo x e espaço vertical entre as figuras
-        fig = make_subplots(rows=2, cols=1)
+        fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.1,
+                            subplot_titles=("Histograma para a Classe 0", "Histograma para a Classe 1"))
 
         # Calcular os valores de frequência para cada hora
         counts_class_0, edges_class_0 = np.histogram(df[df.Class == 0].Time.div(3600), bins=48)
@@ -439,17 +440,16 @@ if (selected2 == "Gráficos"):
 
         # Adicionar histograma para a classe 0 com cor personalizada (vermelho) e hovertext com a quantidade de transações
         fig.add_trace(
-            go.Histogram(x=df[df.Class == 0].Time.div(3600), 
-                         nbinsx=48, 
-                         hovertemplate=[f"{percent:.0f}" for percent in counts_class_0]),
+            go.Histogram(x=edges_class_0, y=counts_class_0, name="Transações normais",
+                        marker_color='#0C3559', text=counts_class_0, hoverinfo='text',
+                        hovertext='Quantidade de transações normais'),
             row=1, col=1
         )
 
         # Adicionar histograma para a classe 1 com cor personalizada (azul) e hovertext com a quantidade de transações
         fig.add_trace(
-            go.Histogram(x=df[df.Class == 1].Time.div(3600), 
-                         nbinsx=48, 
-                         hovertemplate=[f"{percent:.0f}" for percent in counts_class_1]),
+            go.Histogram(x=edges_class_1, y=counts_class_1, name="Transações fraudulentas",
+                        marker_color='#3698BF', text=counts_class_1, hoverinfo='text'),
             row=2, col=1
         )
 
@@ -458,14 +458,13 @@ if (selected2 == "Gráficos"):
         fig.update_yaxes(title_text="Frequência", row=1, col=1)
 
         # Definir os valores do eixo y para cada subplot
-        y_values_subplot1 = [0, 500, 1000, 1500, 2000, ]  # Valores personalizados para o subplot 1
+        y_values_subplot1 = [0, 500, 1000, 1500, 2000]  # Valores personalizados para o subplot 1
         y_values_subplot2 = [0, 50, 100, 150]  # Valores personalizados para o subplot 2
-        fig.update_yaxes(tickvals=y_values_subplot1, 
-                         showgrid=False, row=1, col=1)
-        fig.update_yaxes(tickvals=y_values_subplot2, 
-                         showgrid=False, row=2, col=1)
+        fig.update_yaxes(tickvals=y_values_subplot1, row=1, col=1)
+        fig.update_yaxes(tickvals=y_values_subplot2, row=2, col=1)
 
-        st.plotly_chart(fig, use_container_width=True)
+        # Remover o grid
+        # fig.update_layout(showgrid=False)
         
 # Transações por valor
     with st.container():
@@ -616,8 +615,8 @@ if (selected2 == "Sobre"):
     
     with perfil1:
                   
-        st.image("code/imagens/rodrigo1.png", width=200)
-        #st.image("code/imagens/rodrigo1.png", width=200)
+        st.image("imagens/rodrigo1.png", width=200)
+        #st.image("imagens/rodrigo1.png", width=200)
         st.write('#### **_Wallynson Rodrigo H. da Silva_** \n\n Curso: Sistemas de informação \n\n Email: w.rodrigo@ufms.br', use_column_width=True)
         
         url = "https://github.com/wrodrigohs"
@@ -641,8 +640,8 @@ if (selected2 == "Sobre"):
 
 
     with perfil2:
-        st.image("code/imagens/vitor2.png", width=200)
-        #st.image("code/imagens/vitor2.png", width=200)
+        st.image("imagens/vitor2.png", width=200)
+        #st.image("imagens/vitor2.png", width=200)
         st.write('#### **_Vitor de Sousa Santos_** \n\n Curso: Engenharia da computação \n\n Email: vi.ssantos2000@gmail.com \n\n  ', use_column_width=True )
         
         #links para GitHub e linkedin
@@ -662,8 +661,8 @@ if (selected2 == "Sobre"):
         st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     with perfil3:
-        st.image("code/imagens/icaro3.png", width=200)
-        #st.image("code/imagens/icaro3.png", width=200)
+        st.image("imagens/icaro3.png", width=200)
+        #st.image("imagens/icaro3.png", width=200)
         st.write('#### **_Ícaro de Paula F. Coêlho_** \n\nCurso: Engenharia da computação \n\n Email:  icarogga@gmail.com \n\n', use_column_width=True)
         
         url = "https://github.com/icarogga"
@@ -682,8 +681,8 @@ if (selected2 == "Sobre"):
         st.write(f'<a href="{url2}" target="_blank" style="text-decoration: none;"><button style="background-color: #4682b4; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">LinkedIn</button></a>', unsafe_allow_html=True)
         
     with perfil4:
-        st.image("code/imagens/marcelo4.png", width=200)
-        #st.image("code/imagens/marcelo4.png", width=200)
+        st.image("imagens/marcelo4.png", width=200)
+        #st.image("imagens/marcelo4.png", width=200)
         st.write('#### **_Marcelo Ferreira Borba_** \nCurso: Sistemas de informação \n\n Email: m.ferreira@ufms.br \n', use_column_width=True)
         
         url = "https://github.com/MarceloFBorba"
@@ -707,8 +706,8 @@ if (selected2 == "Sobre"):
     perfil5= st.container()
     
     with perfil5:
-        st.image("code/imagens/titos5.png", width=200)
-        #st.image("code/imagens/titos5.png", width=200)
+        st.image("imagens/titos5.png", width=200)
+        #st.image("imagens/titos5.png", width=200)
         st.write(" #### **_Bruno Laureano Titos Moreno_** \n\n Coordernador de Tecnologia na B3\n\n Email: bruno.moreno@b3.com.br")
 
         url = "https://www.linkedin.com/in/bruno-titos-8b537abb/"
