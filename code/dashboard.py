@@ -83,7 +83,7 @@ with st.sidebar:
     st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
-    menu_icon="menu-app", default_index=0,
+    menu_icon="menu-app", default_index=1,
     styles={
         "nav-link-selected": {"background-color": "#0378A6"}
     }
