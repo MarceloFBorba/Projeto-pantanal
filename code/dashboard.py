@@ -32,7 +32,7 @@ import xgboost as xgb
 st.set_page_config(page_title='Pantanal.dev', 
                    page_icon='code/imagens/LogoFraudWatchdog.png',
                    layout='wide',
-                   initial_sidebar_state='auto'
+                   initial_sidebar_state='expanded'
                    )
 
 file_path = 'https://github.com/MarceloFBorba/Projeto-pantanal/releases/download/dataframe/creditcard.csv'
@@ -83,7 +83,7 @@ with st.sidebar:
     st.sidebar.image('code/imagens/LogoFraudWatchdog.png', width=150)
     selected2 = option_menu("Menu",["Home", "Dados Usados", "Gráficos", "Sobre"], 
     icons=['house', 'database', 'graph-up', 'info-circle'], 
-    menu_icon="menu-app", default_index=1,
+    menu_icon="menu-app", default_index=0,
     styles={
         "nav-link-selected": {"background-color": "#0378A6"}
     }
