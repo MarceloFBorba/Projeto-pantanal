@@ -32,7 +32,7 @@ import xgboost as xgb
 st.set_page_config(page_title='Pantanal.dev', 
                    page_icon='code/imagens/LogoFraudWatchdog.png',
                    layout='wide',
-                   initial_sidebar_state='expanded'
+                   initial_sidebar_state='collapsed'
                    )
 
 file_path = 'https://github.com/MarceloFBorba/Projeto-pantanal/releases/download/dataframe/creditcard.csv'
