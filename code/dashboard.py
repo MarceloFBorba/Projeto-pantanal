@@ -152,7 +152,7 @@ if (selected2 == "Gráficos"):
         image = Image.open('code/imagens/dinheiro-total-cortado.png')
         # Exibindo a imagem
         total = df['Amount'].sum()
-        st.image(image, use_column_width='Auto')
+        st.image(image, use_container_width='Auto')
         st.metric(label='##### Valores totais ($)', value=numerize(total))
 
     with total2:
@@ -167,7 +167,7 @@ if (selected2 == "Gráficos"):
         image = Image.open('code/imagens/roubo.png')
         # Exibindo a imagem
         
-        st.image(image, use_column_width=125)
+        st.image(image, use_container_width=125)
         st.metric(label='##### Com o modelo ($)', value=numerize(valor_falso_positivo))
 
     with total4:
@@ -179,7 +179,7 @@ if (selected2 == "Gráficos"):
         media = df.Amount[df['Class'] == 1].mean()
         # porcentagem = df.Amount[df['Class'] == 1].sum() / df.Amount.sum() * 100
         
-        st.image(image, use_column_width='Auto')
+        st.image(image, use_container_width='Auto')
         st.metric(label='##### Média dos valores fraudados ($)', value=numerize(media))
         
     with total5:
@@ -187,7 +187,7 @@ if (selected2 == "Gráficos"):
         # Exibindo a imagem
         moda = df.Amount[df['Class'] == 1].mode().values[0]
         
-        st.image(image, use_column_width=125)
+        st.image(image, use_container_width=125)
         st.metric(label='##### Moda do valor em fraudes ($)', value=numerize(moda))
 
     Q1, Q2 = st.columns(2)
